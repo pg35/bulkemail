@@ -3,25 +3,18 @@ import ReactDOM from "react-dom";
 
 import "./styles.css";
 
-import JsonRequest from "./components/JsonRequest";
 import Quota from "./components/Quota";
+import LastEmailResumer from "./components/LastEmailResumer";
 const delay = ms => cb => setTimeout(cb, ms);
 
-function App() {
+function Test() {
   return (
     <div className="App">
-      {/*<JsonRequest
-        data={{ name: "abcnew", job: "vverywel" }}
-        method="POST"
-        onSuccess={console.log}
-        onError={console.log}
-        onComplete={() => "completed"}
-        label="hell owlrd"
-  />*/}
       <Quota />
+      <LastEmailResumer />
     </div>
   );
 }
 
 const rootElement = document.getElementById("root");
-ReactDOM.render(<App />, rootElement);
+ReactDOM.render(<Test />, rootElement);

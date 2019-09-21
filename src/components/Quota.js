@@ -17,7 +17,7 @@ class Quota extends React.Component {
       <JsonRequest
         data={{ "mocky-delay": "500ms" }}
         baseUrl="https://www.mocky.io/v2/5d857913320000410f07b267"
-        label="quota"
+        progressMessage="Fetching quota"
         onSuccess={obj => {
           console.log(obj);
           this.setState({
@@ -31,7 +31,7 @@ class Quota extends React.Component {
             loading: false
           })
         }
-        validateResponse={json => json.err}
+        validateResponse={json => !json.err}
       />
     );
   }

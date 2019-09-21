@@ -1,2 +1,0 @@
-# bulkemail
-Created with CodeSandbox

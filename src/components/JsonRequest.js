@@ -1,5 +1,6 @@
 import React from "react";
 import "whatwg-fetch";
+import Highlight from "./Highlight";
 
 function buildQueryString(params) {
   if (!params) return "";
@@ -107,8 +108,8 @@ class JsonRequest extends React.Component {
       }
       return (
         <div>
-          <div>Failed to fetch {this.props.label}. </div>
-          <div>{detail}</div>
+          <Highlight v={`Failed: ${this.props.progressMessage} `} />
+          {detail ? `(${detail}) ` : " "}
           <button onClick={() => this.fetch()}>Retry</button>
         </div>
       );
@@ -118,6 +119,6 @@ class JsonRequest extends React.Component {
 }
 JsonRequest.defaultProps = {
   baseUrl: "https://www.mocky.io/v2"
-  //data: { "mocky-delay": "500ms" }
+  //data: { "mocky-delay": "3500ms" }
 };
 export default JsonRequest;

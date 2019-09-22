@@ -70,11 +70,12 @@ class App extends React.Component {
   renderInitRequest() {
     return (
       <JsonRequest
-        resource={resources.app.pass.hasSavedEmail}
+        resource={resources.app.hasSavedEmail}
         progressMessage="Initializing App"
         onSuccess={obj => {
           console.log("app::", obj);
           this.setState({
+            init: true,
             isNewEmail: !obj.savedEmail,
             clientId: obj.savedEmail ? obj.savedEmail.clientId : "",
             email: this.buildEmailObj(obj.savedEmail),
@@ -82,15 +83,11 @@ class App extends React.Component {
             quota: obj.quota
           });
         }}
-        onComplete={() =>
-          this.setState({
-            init: true
-          })
-        }
         validateResponse={json => !json.err}
       />
     );
   }
+
   componentWillUnmount() {
     console.log("app: unmounting");
   }

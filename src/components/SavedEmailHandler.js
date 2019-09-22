@@ -70,7 +70,7 @@ class SavedEmailHandler extends React.Component {
   renderDeleteRequest() {
     return (
       <JsonRequest
-        resource={resources.delSavedEmail.pass}
+        resource={resources.error.code500 && resources.delSavedEmail.pass}
         progressMessage="Deleting saved email"
         onSuccess={obj => {
           console.log("delete saved email::", obj);

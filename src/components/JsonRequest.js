@@ -29,9 +29,7 @@ class JsonRequest extends React.Component {
       error: null
     };
   }
-  componentWillUnmount() {
-    console.log("jsonreq: unmounting");
-  }
+
   fetch() {
     const {
       baseUrl,
@@ -77,15 +75,20 @@ class JsonRequest extends React.Component {
         onError && onError(error);
       })
       .finally(() => {
-        this.setState({ fetching: false });
-        onComplete && onComplete();
+        if (this.mounted) {
+          this.setState({ fetching: false });
+          onComplete && onComplete();
+        }
       });
   }
 
   componentDidMount() {
     this.fetch();
+    this.mounted = true;
   }
-
+  componentWillUnmount() {
+    this.mounted = false;
+  }
   render() {
     if (this.state.fetching) {
       return (

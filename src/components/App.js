@@ -70,7 +70,7 @@ class App extends React.Component {
   renderInitRequest() {
     return (
       <JsonRequest
-        resource={resources.app.hasSavedEmail}
+        resource={resources.error.code500 || resources.app.hasSavedEmail}
         progressMessage="Initializing App"
         onSuccess={obj => {
           console.log("app::", obj);
@@ -84,6 +84,7 @@ class App extends React.Component {
           });
         }}
         validateResponse={json => !json.err}
+        onComplete={() => "app oncomplete called"}
       />
     );
   }

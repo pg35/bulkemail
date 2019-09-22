@@ -41,4 +41,10 @@ class Test extends React.Component {
   }
 }
 const rootElement = document.getElementById("mesblkml");
-ReactDOM.render(<App allPostcodes={allPostcodes} />, rootElement);
+ReactDOM.render(
+  <App
+    quota={{ limit: 100, used: 55, nextRenewal: "in" }}
+    allPostcodes={allPostcodes}
+  />,
+  rootElement
+);

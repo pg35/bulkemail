@@ -1,17 +1,22 @@
 import React from "react";
 import { MemoryRouter as Router } from "react-router";
-import { Route } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 
-import Quota from "./Quota";
 import LastEmailResumer from "./LastEmailResumer";
+import HomePage from "./HomePage";
 import Composer from "./Composer";
 import Navigation from "./Navigation";
+import JsonRequest from "./JsonRequest";
+
+import { resources } from "../mockapi";
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      newEmail: true,
+      init: false,
+      isNewEmail: true,
+      clientId: "",
       email: {
         postcode: "",
         subject: "",
@@ -20,9 +25,11 @@ class App extends React.Component {
       progess: {
         sentCount: 0,
         customerCount: 0
-      }
+      },
+      quota: {}
     };
   }
+
   buildEmailObj(obj) {
     return {
       postcode: (obj && obj.postcode) || "",
@@ -30,16 +37,17 @@ class App extends React.Component {
       message: (obj && obj.message) || ""
     };
   }
+
   buildProgressObj(obj) {
     return {
       sentCount: (obj && obj.sentCount) || 0,
-      subject: (obj && obj.customerCount) || 0
+      customerCount: (obj && obj.customerCount) || 0
     };
   }
 
   handleLastEmailFound = lastEmail => {
     this.setState({
-      newEmail: false,
+      isNewEmail: false,
       email: this.buildEmailObj(lastEmail),
       progress: this.buildProgressObj(lastEmail)
     });
@@ -47,7 +55,7 @@ class App extends React.Component {
 
   handleLastEmailDiscard = () => {
     this.setState({
-      newEmail: true,
+      isNewEmail: true,
       email: this.buildEmailObj(null),
       progress: this.buildProgressObj(null)
     });
@@ -60,73 +68,100 @@ class App extends React.Component {
     });
   };
 
-  render() {
-    const { email, progress, newEmail } = this.state;
+  renderInitRequest() {
     return (
+      <JsonRequest
+        resource={resources.app.pass.hasLastEmail}
+        progressMessage="Initializing App"
+        onSuccess={obj => {
+          console.log("app::", obj);
+          this.setState({
+            isNewEmail: !obj.lastEmail,
+            clientId: obj.clientId,
+            email: this.buildEmailObj(obj.lastEmail),
+            progress: this.buildProgressObj(obj.lastEmail),
+            quota: obj.quota
+          });
+        }}
+        onComplete={() =>
+          this.setState({
+            init: true
+          })
+        }
+        validateResponse={json => !json.err}
+      />
+    );
+  }
+  componentWillUnmount() {
+    console.log("app: unmounting");
+  }
+  render() {
+    const { init, isNewEmail, email, progress, quota } = this.state;
+    return !init ? (
+      this.renderInitRequest()
+    ) : (
       <Router initialEntries={["/", "/compose", "/preview"]}>
-        <Route
-          path="/"
-          exact
-          render={() => (
-            <div id="mesblkml-home">
-              <h2>Home</h2>
-              <Quota />
-              <br />
-              <LastEmailResumer
+        <Switch>
+          <Route
+            path="/"
+            exact
+            render={() => (
+              <HomePage
+                quota={quota}
+                lastEmail={isNewEmail ? null : { ...email, ...progress }}
                 onLastEmailFound={this.handleLastEmailFound}
                 onLastEmailDiscard={this.handleLastEmailDiscard}
-                lastEmail={newEmail ? null : { ...email, ...progress }}
               />
-            </div>
-          )}
-        />
-        <Route
-          path="/compose"
-          exact
-          render={() => (
-            <div id="mesblkml-compose">
-              <h2>Compose Email</h2>
-              <Composer
-                {...this.state.email}
-                allPostcodes={this.props.allPostcodes}
-                onChange={this.handleEmailDraftChange}
-              />
-              <Navigation
-                prevPath="/"
-                prevLabel="Home"
-                nextPath="/preview"
-                nextLabel="Preview"
-              />
-            </div>
-          )}
-        />
-        <Route
-          path="/preview"
-          exact
-          render={() => (
-            <div id="mesblkml-preview">
-              <h2>Preview Email</h2>
-              {JSON.stringify(this.state.email)}
-              <Navigation
-                prevPath={newEmail ? "/compose" : "/"}
-                prevLabel={newEmail ? "Compose" : "Home"}
-                nextPath="/process"
-                nextLabel="Confirm & Send"
-              />
-            </div>
-          )}
-        />
-        <Route
-          path="/process"
-          exact
-          render={() => (
-            <div id="mesblkml-process">
-              <h2>Sending Email</h2>
-              {JSON.stringify(this.state.email)}
-              <Navigation prevPath="/preview" prevLabel="Preview" />
-            </div>
-          )}
-        />
+            )}
+          />
+          <Route
+            path="/compose"
+            exact
+            render={() => (
+              <div id="mesblkml-compose">
+                <h2>Compose Email</h2>
+                <Composer
+                  {...this.state.email}
+                  allPostcodes={this.props.allPostcodes}
+                  onChange={this.handleEmailDraftChange}
+                />
+                <Navigation
+                  prevPath="/"
+                  prevLabel="Home"
+                  nextPath="/preview"
+                  nextLabel="Preview"
+                />
+              </div>
+            )}
+          />
+          <Route
+            path="/preview"
+            exact
+            render={() => (
+              <div id="mesblkml-preview">
+                <h2>Preview Email</h2>
+                {JSON.stringify(this.state.email)}
+                <Navigation
+                  prevPath={isNewEmail ? "/compose" : "/"}
+                  prevLabel={isNewEmail ? "Compose" : "Home"}
+                  nextPath="/process"
+                  nextLabel="Confirm & Send"
+                />
+              </div>
+            )}
+          />
+          <Route
+            path="/process"
+            exact
+            render={() => (
+              <div id="mesblkml-process">
+                <h2>Sending Email</h2>
+                {JSON.stringify(this.state.email)}
+                <Navigation prevPath="/preview" prevLabel="Preview" />
+              </div>
+            )}
+          />
+        </Switch>
       </Router>
     );
   }

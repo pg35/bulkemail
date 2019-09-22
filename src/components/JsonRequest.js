@@ -28,7 +28,9 @@ class JsonRequest extends React.Component {
       error: null
     };
   }
-
+  componentWillUnmount() {
+    console.log("jsonreq: unmounting");
+  }
   fetch() {
     const {
       baseUrl,

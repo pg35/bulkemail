@@ -2,10 +2,10 @@ import React from "react";
 import Highlight from "./Highlight";
 import { Link } from "react-router-dom";
 
-function LastEmailResumer(props) {
+function SavedEmailHandler(props) {
   console.log("lastemalresumer", props);
   const renderLastEmailInfo = () => {
-    const { postcode, sentCount, customerCount } = props.lastEmail;
+    const { postcode, sentCount, customerCount } = props.savedEmail;
     return (
       <div>
         <div>
@@ -16,17 +16,17 @@ function LastEmailResumer(props) {
           It was saved to be sent to the remaining{" "}
           <Highlight v={customerCount - sentCount} /> customers.
           <br />
-          Send it now or discard it.
+          Send it now or delete it.
         </div>
         <div style={{ marginTop: "20px" }}>
           <Link
             to="/"
             onClick={e => {
               console.log("link clicked");
-              props.onLastEmailDiscard();
+              props.onSavedEmailDelete();
             }}
           >
-            Discard Saved Email
+            Delete Saved Email
           </Link>
           &nbsp;&nbsp;&nbsp;
           <Link to="/preview">Preview Saved Email</Link>
@@ -35,12 +35,12 @@ function LastEmailResumer(props) {
     );
   };
 
-  const element = props.lastEmail ? (
+  const element = props.savedEmail ? (
     renderLastEmailInfo()
   ) : (
     <Link to="/compose">Compose Email</Link>
   );
-  return <div className="mesblkml-resumer">{element}</div>;
+  return <div>{element}</div>;
 }
 
-export default LastEmailResumer;
+export default SavedEmailHandler;

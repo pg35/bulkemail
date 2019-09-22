@@ -1,7 +1,7 @@
 import React from "react";
 
 import Quota from "./Quota";
-import LastEmailResumer from "./LastEmailResumer";
+import SavedEmailHandler from "./LastEmailResumer";
 
 function HomePage(props) {
   console.log("homepage ", props);
@@ -10,7 +10,7 @@ function HomePage(props) {
       <h2>Home</h2>
       <Quota {...props.quota} />
       <br />
-      <LastEmailResumer {...props} />
+      <SavedEmailHandler {...props} />
     </div>
   );
 }

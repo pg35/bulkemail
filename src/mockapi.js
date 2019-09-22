@@ -11,9 +11,9 @@ export const resources = {
   },
   app: {
     pass: {
-      /*{"err":0,"clientId":5894,"lastEmail":{"postcode":"abc","subject":"first email","message":"first emial body","sentCount":52, "customerCount": 100},"quota":{"limit":100,"used":55,"nextRenewal":"in 2 days"}}*/
-      hasLastEmail: "5d87db3d34000038880a15c4",
-      noLastEmail: "5d87dc2034000094910a15c6"
+      /*{"err":0,"savedEmail":{"clientId":5894,"postcode":"abc","subject":"first email","message":"first emial body","sentCount":52, "customerCount": 100},"quota":{"limit":100,"used":55,"nextRenewal":"in 2 days"}}*/
+      hasSavedEmail: "5d87e7a83300005e00d7d6ff",
+      noSavedEmail: "5d87dc2034000094910a15c6"
     }
   }
 };

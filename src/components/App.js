@@ -45,7 +45,7 @@ class App extends React.Component {
     };
   }
 
-  handleLastEmailFound = lastEmail => {
+  handleSavedEmailFound = lastEmail => {
     this.setState({
       isNewEmail: false,
       email: this.buildEmailObj(lastEmail),
@@ -53,7 +53,7 @@ class App extends React.Component {
     });
   };
 
-  handleLastEmailDiscard = () => {
+  handleSavedEmailDelete = () => {
     this.setState({
       isNewEmail: true,
       email: this.buildEmailObj(null),
@@ -71,15 +71,15 @@ class App extends React.Component {
   renderInitRequest() {
     return (
       <JsonRequest
-        resource={resources.app.pass.hasLastEmail}
+        resource={resources.app.pass.hasSavedEmail}
         progressMessage="Initializing App"
         onSuccess={obj => {
           console.log("app::", obj);
           this.setState({
-            isNewEmail: !obj.lastEmail,
-            clientId: obj.clientId,
-            email: this.buildEmailObj(obj.lastEmail),
-            progress: this.buildProgressObj(obj.lastEmail),
+            isNewEmail: !obj.savedEmail,
+            clientId: obj.savedEmail ? obj.savedEmail.clientId : "",
+            email: this.buildEmailObj(obj.savedEmail),
+            progress: this.buildProgressObj(obj.savedEmail),
             quota: obj.quota
           });
         }}
@@ -108,9 +108,8 @@ class App extends React.Component {
             render={() => (
               <HomePage
                 quota={quota}
-                lastEmail={isNewEmail ? null : { ...email, ...progress }}
-                onLastEmailFound={this.handleLastEmailFound}
-                onLastEmailDiscard={this.handleLastEmailDiscard}
+                savedEmail={isNewEmail ? null : { ...email, ...progress }}
+                onSavedEmailDelete={this.handleSavedEmailDelete}
               />
             )}
           />

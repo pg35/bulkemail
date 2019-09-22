@@ -87,7 +87,7 @@ class JsonRequest extends React.Component {
     if (this.state.fetching) {
       return (
         <div>
-          Feting {this.props.label} ...{" "}
+          {this.props.progressMessage} ...{" "}
           <img
             style={{ verticalAlign: "bottom" }}
             src="https://i.ibb.co/7V89Rtr/spinner.gif"
@@ -115,6 +115,7 @@ class JsonRequest extends React.Component {
   }
 }
 JsonRequest.defaultProps = {
-  baseUrl: "https://reqres.in/api/users"
+  baseUrl: "https://www.mocky.io/v2",
+  data: { "mocky-delay": "500ms" }
 };
 export default JsonRequest;

@@ -1,24 +1,27 @@
 import React from "react";
 import JsonRequest from "./JsonRequest";
+import Highlight from "./Highlight";
+import { Link } from "react-router-dom";
+import { resources } from "../mockapi";
 
-class SavedEmailHandler extends React.Component {
+class LastEmailResumer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      loading: true,
+      loading: true
     };
   }
 
   renderJsonRequest() {
+    console.log(resources.resumer.pass.hasLastemail);
     return (
       <JsonRequest
-        data={{ "mocky-delay": "500ms" }}
-        baseUrl="https://www.mocky.io/v2/5d867c1d320000fab107b3f4"
+        resource={resources.resumer.pass.hasLastEmail}
         progressMessage="Checking status of last email operation"
         onSuccess={obj => {
           console.log(obj);
-          if (obj.savedEmail){
-            this.props.onSavedEmailFound(obj);
+          if (obj.lastEmail) {
+            this.props.onLastEmailFound(obj.lastEmail);
           }
         }}
         onComplete={() =>
@@ -31,30 +34,36 @@ class SavedEmailHandler extends React.Component {
     );
   }
 
-  renderResume(){
-    const {postcode, sentCount, customersCount} = this.props.lastEmail;
+  renderLastEmailInfo() {
+    const { postcode, sentCount, customersCount } = this.props.lastEmail;
     return (
       <div>
-        Previously, email was sent to <Bold v={sentCount} /> out of{" "}
-        <Bold v={customersCount} /> customers of postcode <Bold v={postcode} />.
-        <br />
-        Send email to remaining <Bold v={customersCount - sentCount} />{" "}
-        cusomters or discard the saved email.
+        <p />
         <div>
-          <button onClick={() => onDiscardLastEmail()}>Discard Saved Email</button>
-          <button onClick={() => onDiscardLastEmail()}>Preview Saved Email</button>
+          <Link
+            to="/"
+            onClick={e => {
+              console.log("link clicked");
+              this.props.onLastEmailDiscard();
+            }}
+          >
+            Discard Saved Email
+          </Link>
+          <Link to="/preview">Preview Last Email</Link>
         </div>
       </div>
     );
   }
   render() {
+    console.log(this.props);
     const element =
-    this.state.loading || this.props.refresh ? (
-      this.renderJsonRequest()
-    ) : (
-      this.props.lastEmail ? this.renderResume() : <Link to="/compose">Compose Email</Link>
-    
-    }
+      this.state.loading || this.props.refresh ? (
+        this.renderJsonRequest()
+      ) : this.props.lastEmail.postcode ? (
+        this.renderLastEmailInfo()
+      ) : (
+        <Link to="/compose">Compose Email</Link>
+      );
     return <div>{element}</div>;
   }
 }

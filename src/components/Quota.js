@@ -1,5 +1,6 @@
 import React from "react";
 import JsonRequest from "./JsonRequest";
+import { resources } from "../mockapi";
 
 class Quota extends React.Component {
   constructor(props) {
@@ -15,8 +16,7 @@ class Quota extends React.Component {
   renderJsonRequest() {
     return (
       <JsonRequest
-        data={{ "mocky-delay": "500ms" }}
-        baseUrl="https://www.mocky.io/v2/5d857913320000410f07b267"
+        resource={resources.quota.pass}
         progressMessage="Fetching quota"
         onSuccess={obj => {
           console.log(obj);

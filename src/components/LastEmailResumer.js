@@ -35,10 +35,19 @@ class LastEmailResumer extends React.Component {
   }
 
   renderLastEmailInfo() {
-    const { postcode, sentCount, customersCount } = this.props.lastEmail;
+    const { postcode, sentCount, customerCount } = this.props.lastEmail;
     return (
       <div>
-        <p />
+        <p>
+          Previously, email destined for postcode <Highlight v={postcode} /> was
+          sent to <Highlight v={sentCount} /> out of{" "}
+          <Highlight v={customerCount} /> customers.
+          <br />
+          It was saved to be sent to the remaining{" "}
+          <Highlight v={customerCount - sentCount} /> customers.
+          <br />
+          Send it now or discard it.
+        </p>
         <div>
           <Link
             to="/"

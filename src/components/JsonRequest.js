@@ -115,7 +115,7 @@ class JsonRequest extends React.Component {
   }
 }
 JsonRequest.defaultProps = {
-  baseUrl: "https://www.mocky.io/v2",
-  data: { "mocky-delay": "500ms" }
+  baseUrl: "https://www.mocky.io/v2"
+  //data: { "mocky-delay": "500ms" }
 };
 export default JsonRequest;

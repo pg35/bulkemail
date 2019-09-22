@@ -1,5 +1,7 @@
 import React from "react";
 
-export default function Highlight(props) {
+function Highlight(props) {
   return <strong>{props.v}</strong>;
 }
+
+export default Highlight;

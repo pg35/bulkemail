@@ -1,7 +1,14 @@
 import React from "react";
 
 function Composer(props) {
-  const { postcode, subject, message, allPostcodes, readOnly } = props;
+  const {
+    postcode,
+    subject,
+    message,
+    allPostcodes,
+    readOnly,
+    onChange
+  } = props;
   const options = allPostcodes.map(pc => (
     <option key={pc} value={pc}>
       {pc}
@@ -11,9 +18,8 @@ function Composer(props) {
     <div id="mesblkml-composer">
       <select
         value={postcode}
-        onChange={props.onChange}
         name="postcode"
-        disabled={readOnly}
+        onChange={readOnly ? () => {} : onChange}
       >
         <option key={allPostcodes.length} value="">
           Select Postcode
@@ -23,15 +29,15 @@ function Composer(props) {
       <input
         type="text"
         value={subject}
-        onChange={props.onChange}
+        onChange={onChange}
         name="subject"
-        disabled={readOnly}
+        readOnly={readOnly}
       />
       <textarea
         value={message}
-        onChange={props.onChange}
+        onChange={onChange}
         name="message"
-        disabled={readOnly}
+        readOnly={readOnly}
       />
     </div>
   );

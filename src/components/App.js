@@ -1,8 +1,11 @@
 import React from "react";
 import { MemoryRouter as Router } from "react-router";
 import { Route } from "react-router-dom";
+
 import Quota from "./Quota";
 import LastEmailResumer from "./LastEmailResumer";
+import Composer from "./Composer";
+import Navigation from "./Navigation";
 
 class App extends React.Component {
   constructor(props) {
@@ -44,6 +47,13 @@ class App extends React.Component {
     });
   };
 
+  handleEmailDraftChange = e => {
+    const { name, value } = e.target;
+    this.setState({
+      email: { ...this.state.email, [name]: value }
+    });
+  };
+
   render() {
     const { email, progress } = this.state;
     return (
@@ -69,7 +79,17 @@ class App extends React.Component {
           render={() => (
             <div id="mesblkml-compose">
               <h2>Compose Email</h2>
-              {JSON.stringify(this.state.email)}
+              <Composer
+                {...this.state.email}
+                allPostcodes={this.props.allPostcodes}
+                onChange={this.handleEmailDraftChange}
+              />
+              <Navigation
+                prevPath="/"
+                prevLabel="Home"
+                nextPath="/preview"
+                nextLabel="Preview"
+              />
             </div>
           )}
         />
@@ -80,6 +100,23 @@ class App extends React.Component {
             <div id="mesblkml-preview">
               <h2>Preview Email</h2>
               {JSON.stringify(this.state.email)}
+              <Navigation
+                prevPath="/compose"
+                prevLabel="compose"
+                nextPath="/process"
+                nextLabel="Confirm & Send"
+              />
+            </div>
+          )}
+        />
+        <Route
+          path="/process"
+          exact
+          render={() => (
+            <div id="mesblkml-process">
+              <h2>Sending Email</h2>
+              {JSON.stringify(this.state.email)}
+              <Navigation prevPath="/preview" prevLabel="Preview" />
             </div>
           )}
         />

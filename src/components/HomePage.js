@@ -1,7 +1,7 @@
 import React from "react";
 
 import Quota from "./Quota";
-import SavedEmailHandler from "./LastEmailResumer";
+import SavedEmailHandler from "./SavedEmailHandler";
 
 function HomePage(props) {
   console.log("homepage ", props);

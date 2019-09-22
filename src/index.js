@@ -5,7 +5,6 @@ import "./styles.css";
 
 import App from "./components/App";
 import Quota from "./components/Quota";
-import LastEmailResumer from "./components/LastEmailResumer";
 import Composer from "./components/Composer";
 import Navigation from "./components/Navigation";
 

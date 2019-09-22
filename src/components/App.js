@@ -2,7 +2,6 @@ import React from "react";
 import { MemoryRouter as Router } from "react-router";
 import { Route, Switch } from "react-router-dom";
 
-import LastEmailResumer from "./LastEmailResumer";
 import HomePage from "./HomePage";
 import Composer from "./Composer";
 import Navigation from "./Navigation";

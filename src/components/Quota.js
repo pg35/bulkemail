@@ -42,29 +42,31 @@ class Quota extends React.Component {
       this.state.loading || this.props.refresh ? (
         this.renderJsonRequest()
       ) : (
-        <table>
-          <tbody>
-            <tr>
-              <th colSpan="2" style={{ textAlign: "center" }}>
-                Quota
-              </th>
-            </tr>
-            <tr>
-              <th>Limit</th>
-              <td>{this.state.limit}</td>
-            </tr>
-            <tr>
-              <th>Remaining</th>
-              <td>{this.state.limit - this.state.used}</td>
-            </tr>
-            <tr>
-              <th>Next Renewal</th>
-              <td>{this.state.nextRenewal}</td>
-            </tr>
-          </tbody>
-        </table>
+        <div className="mesblkml-quota">
+          <table>
+            <tbody>
+              <tr>
+                <th colSpan="2" style={{ textAlign: "center" }}>
+                  Quota
+                </th>
+              </tr>
+              <tr>
+                <th>Limit</th>
+                <td>{this.state.limit}</td>
+              </tr>
+              <tr>
+                <th>Remaining</th>
+                <td>{this.state.limit - this.state.used}</td>
+              </tr>
+              <tr>
+                <th>Next Renewal</th>
+                <td>{this.state.nextRenewal}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       );
-    return <div style={{ border: "solid" }}>{element}</div>;
+    return <div>{element}</div>;
   }
 }
 

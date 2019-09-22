@@ -15,7 +15,7 @@ function Composer(props) {
     </option>
   ));
   return (
-    <div id="mesblkml-composer">
+    <div className="mesblkml-composer">
       <select
         value={postcode}
         name="postcode"

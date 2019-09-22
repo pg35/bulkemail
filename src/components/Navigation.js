@@ -5,7 +5,7 @@ function Navigation(props) {
   const { prevPath, prevLabel, onPrev, nextPath, nextLabel, onNext } = props;
   const noop = () => {};
   return (
-    <div>
+    <div className="mesblkml-navigation">
       {prevPath ? (
         <Link to={prevPath} onClick={onPrev ? onPrev : noop}>
           {prevLabel ? prevLabel : "Previous"}

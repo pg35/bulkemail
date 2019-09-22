@@ -11,15 +11,19 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      newEmail: true,
       email: {
         postcode: "",
         subject: "",
         message: ""
+      },
+      progess: {
+        sentCount: 0,
+        customerCount: 0
       }
     };
   }
   buildEmailObj(obj) {
-    console.log("buldema claled");
     return {
       postcode: (obj && obj.postcode) || "",
       subject: (obj && obj.subject) || "",
@@ -35,6 +39,7 @@ class App extends React.Component {
 
   handleLastEmailFound = lastEmail => {
     this.setState({
+      newEmail: false,
       email: this.buildEmailObj(lastEmail),
       progress: this.buildProgressObj(lastEmail)
     });
@@ -42,6 +47,7 @@ class App extends React.Component {
 
   handleLastEmailDiscard = () => {
     this.setState({
+      newEmail: true,
       email: this.buildEmailObj(null),
       progress: this.buildProgressObj(null)
     });
@@ -55,7 +61,7 @@ class App extends React.Component {
   };
 
   render() {
-    const { email, progress } = this.state;
+    const { email, progress, newEmail } = this.state;
     return (
       <Router initialEntries={["/", "/compose", "/preview"]}>
         <Route
@@ -65,10 +71,11 @@ class App extends React.Component {
             <div id="mesblkml-home">
               <h2>Home</h2>
               <Quota />
+              <br />
               <LastEmailResumer
                 onLastEmailFound={this.handleLastEmailFound}
                 onLastEmailDiscard={this.handleLastEmailDiscard}
-                lastEmail={{ ...email, ...progress }}
+                lastEmail={newEmail ? null : { ...email, ...progress }}
               />
             </div>
           )}
@@ -101,8 +108,8 @@ class App extends React.Component {
               <h2>Preview Email</h2>
               {JSON.stringify(this.state.email)}
               <Navigation
-                prevPath="/compose"
-                prevLabel="compose"
+                prevPath={newEmail ? "/compose" : "/"}
+                prevLabel={newEmail ? "Compose" : "Home"}
                 nextPath="/process"
                 nextLabel="Confirm & Send"
               />

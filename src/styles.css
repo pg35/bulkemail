@@ -1,4 +1,48 @@
-.App {
-  font-family: sans-serif;
+#mesblkml {
   text-align: center;
+}
+/*common*/
+#mesblkml > div {
+  display: block;
+  margin-bottom: 20px;
+}
+
+/*header*/
+.mesblkml-quota table {
+  width: 250px;
+  border-collapse: collapse;
+  margin: 0 auto;
+}
+.mesblkml-quota td,
+.mesblkml-quota th {
+  text-align: left;
+  border: 1px solid;
+}
+
+/*composer*/
+.mesblkml-composer > input,
+.mesblkml-composer > select,
+.mesblkml-composer > textarea {
+  display: block;
+  margin-bottom: 10px;
+  width: 100%;
+}
+/*progress*/
+.mesblkml-progress {
+  margin-top: 40px;
+  font-size: 1.5em;
+}
+/*navigation*/
+.mesblkml-navigation:after {
+  display: table;
+  clear: both;
+  content: "";
+}
+
+.mesblkml-navigation > a {
+  display: inline-block;
+  float: left;
+}
+.mesblkml-navigation > a:last-child {
+  float: right;
 }

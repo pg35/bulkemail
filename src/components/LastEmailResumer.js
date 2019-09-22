@@ -38,7 +38,7 @@ class LastEmailResumer extends React.Component {
     const { postcode, sentCount, customerCount } = this.props.lastEmail;
     return (
       <div>
-        <p>
+        <div>
           Previously, email destined for postcode <Highlight v={postcode} /> was
           sent to <Highlight v={sentCount} /> out of{" "}
           <Highlight v={customerCount} /> customers.
@@ -47,8 +47,8 @@ class LastEmailResumer extends React.Component {
           <Highlight v={customerCount - sentCount} /> customers.
           <br />
           Send it now or discard it.
-        </p>
-        <div>
+        </div>
+        <div style={{ marginTop: "20px" }}>
           <Link
             to="/"
             onClick={e => {
@@ -58,7 +58,8 @@ class LastEmailResumer extends React.Component {
           >
             Discard Saved Email
           </Link>
-          <Link to="/preview">Preview Last Email</Link>
+          &nbsp;&nbsp;&nbsp;
+          <Link to="/preview">Preview Saved Email</Link>
         </div>
       </div>
     );
@@ -68,7 +69,7 @@ class LastEmailResumer extends React.Component {
     const element =
       this.state.loading || this.props.refresh ? (
         this.renderJsonRequest()
-      ) : this.props.lastEmail.postcode ? (
+      ) : this.props.lastEmail ? (
         this.renderLastEmailInfo()
       ) : (
         <Link to="/compose">Compose Email</Link>

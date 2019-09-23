@@ -4,6 +4,7 @@ import { Route, Switch } from "react-router-dom";
 
 import HomePage from "./HomePage";
 import Composer from "./Composer";
+import Sender from "./Sender";
 import Navigation from "./Navigation";
 import JsonRequest from "./JsonRequest";
 
@@ -70,7 +71,7 @@ class App extends React.Component {
   renderInitRequest() {
     return (
       <JsonRequest
-        resource={resources.error.code500 || resources.app.hasSavedEmail}
+        resource={resources.error.code500 && resources.app.hasSavedEmail}
         progressMessage="Initializing App"
         onSuccess={obj => {
           console.log("app::", obj);
@@ -153,7 +154,7 @@ class App extends React.Component {
               <div id="mesblkml-process">
                 <h2>Sending Email</h2>
                 {JSON.stringify(this.state.email)}
-                <Navigation prevPath="/preview" prevLabel="Preview" />
+                <Sender />
               </div>
             )}
           />

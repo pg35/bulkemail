@@ -17,6 +17,9 @@ export const resources = {
   delSavedEmail: {
     pass: "5d87dc2034000094910a15c6" //same as nosavedemail b/c only {err:0} needed
   },
+  progress: {
+    pass: "5d88d5113300003008d7dc0c"
+  },
   error: {
     code500: "5d87ec3a3300006e00d7d704"
   }

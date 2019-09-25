@@ -19,27 +19,9 @@
   border: 1px solid;
 }
 
-/*composer*/
-.mesblkml-composer > input,
-.mesblkml-composer > select,
-.mesblkml-composer > textarea {
-  display: block;
-  margin-bottom: 10px;
-  width: 100%;
-}
 /*progress*/
-.mesblkml-progress {
-  position: relative;
-}
-.mesblkml-progress__status {
-  position: absolute;
-  display: inline-block;
-  left: 0;
-  right: 0;
-}
 .mesblkml-progress__stats {
   font-size: 3em;
-  padding-top: 1em;
 }
 .mesblkml-progress__stats > span:first-child {
   font-weight: bold;
@@ -47,17 +29,51 @@
 .mesblkml-progress__stats > span:last-child {
   font-size: 0.5em;
 }
+
+/*result*/
+.mesblkml-result {
+  margin-top: 30px;
+}
+.mesblkml-result > div:first-child {
+  font-size: 3em;
+  margin-bottom: 16px;
+  font-weight: bold;
+}
+.mesblkml-result > div:last-child {
+  font-size: 1.2em;
+}
 /*navigation*/
 .mesblkml-navigation:after {
   display: table;
   clear: both;
   content: "";
 }
-
 .mesblkml-navigation > a {
   display: inline-block;
   float: left;
 }
 .mesblkml-navigation > a:last-child {
-  float: right;
+  float: left;
+}
+
+.mes-field {
+  text-align: left;
+  margin-bottom: 16px;
+}
+.mes-field input,
+.mes-field select,
+.mes-field textarea {
+  width: 100%;
+}
+
+.mes-field--error input,
+.mes-field--error select,
+.mes-field--error textarea {
+  border: 1px solid red;
+}
+.mes-error {
+  color: red;
+}
+.mes-field > .mes-error {
+  font-size: 0.9em;
 }

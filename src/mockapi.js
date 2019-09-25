@@ -20,6 +20,9 @@ export const resources = {
   progress: {
     pass: "5d88d5113300003008d7dc0c"
   },
+  sender: {
+    pass: "5d8aa2493500005c00d46a0d"
+  },
   error: {
     code500: "5d87ec3a3300006e00d7d704"
   }

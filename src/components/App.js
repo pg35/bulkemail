@@ -14,17 +14,18 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      init: false,
+      initCount: 0,
       isNewEmail: true,
-      clientId: "",
       email: {
         postcode: "",
         subject: "",
-        message: ""
+        message: "",
+        dirty: false
       },
-      progess: {
+      progress: {
         sentCount: 0,
-        customerCount: 0
+        customerCount: 0,
+        clientId: ""
       },
       quota: {}
     };
@@ -34,24 +35,18 @@ class App extends React.Component {
     return {
       postcode: (obj && obj.postcode) || "",
       subject: (obj && obj.subject) || "",
-      message: (obj && obj.message) || ""
+      message: (obj && obj.message) || "",
+      dirty: !!obj
     };
   }
 
   buildProgressObj(obj) {
     return {
       sentCount: (obj && obj.sentCount) || 0,
-      customerCount: (obj && obj.customerCount) || 0
+      customerCount: (obj && obj.customerCount) || 0,
+      clientId: (obj && obj.clientId) || ""
     };
   }
-
-  handleSavedEmailFound = lastEmail => {
-    this.setState({
-      isNewEmail: false,
-      email: this.buildEmailObj(lastEmail),
-      progress: this.buildProgressObj(lastEmail)
-    });
-  };
 
   handleSavedEmailDelete = () => {
     this.setState({
@@ -68,21 +63,31 @@ class App extends React.Component {
     });
   };
 
+  handleSentCountChange = newCount => {
+    this.setState({
+      progress: { ...this.state.progress, sentCount: newCount }
+    });
+  };
+
+  handleRestart = () =>
+    this.setState(prevState => ({ initCount: prevState.initCount + 1 }));
+
   renderInitRequest() {
     return (
       <JsonRequest
         resource={resources.error.code500 && resources.app.hasSavedEmail}
-        progressMessage="Initializing App"
+        progressMessage={
+          !this.state.initCount ? "Initializing App" : "Fetching status"
+        }
         onSuccess={obj => {
           console.log("app::", obj);
-          this.setState({
-            init: true,
+          this.setState(prevState => ({
+            initCount: prevState.initCount + 1,
             isNewEmail: !obj.savedEmail,
-            clientId: obj.savedEmail ? obj.savedEmail.clientId : "",
             email: this.buildEmailObj(obj.savedEmail),
             progress: this.buildProgressObj(obj.savedEmail),
             quota: obj.quota
-          });
+          }));
         }}
         validateResponse={json => !json.err}
         onComplete={() => "app oncomplete called"}
@@ -93,9 +98,19 @@ class App extends React.Component {
   componentWillUnmount() {
     console.log("app: unmounting");
   }
+
   render() {
-    const { init, isNewEmail, email, progress, quota } = this.state;
-    return !init ? (
+    console.log("app state", this.state);
+    const { initCount, isNewEmail, email, progress, quota } = this.state;
+    const emailValidation = Object.keys(email).reduce(
+      (o, p) => ({ ...o, [p]: !!String(email[p]).trim() }),
+      {}
+    );
+    const isInvalidEmail = Object.keys(emailValidation).filter(
+      p => !emailValidation[p]
+    ).length;
+
+    return !(initCount % 2) ? (
       this.renderInitRequest()
     ) : (
       <Router initialEntries={["/", "/compose", "/preview"]}>
@@ -121,12 +136,24 @@ class App extends React.Component {
                   {...this.state.email}
                   allPostcodes={this.props.allPostcodes}
                   onChange={this.handleEmailDraftChange}
+                  validation={emailValidation}
                 />
+                {email.dirty && isInvalidEmail ? (
+                  <div className="mes-error">
+                    Please fill in all fields before proceeding to Preview
+                  </div>
+                ) : null}
                 <Navigation
                   prevPath="/"
                   prevLabel="Home"
                   nextPath="/preview"
                   nextLabel="Preview"
+                  onNext={e => {
+                    this.setState({
+                      email: { ...this.state.email, dirty: true }
+                    });
+                    if (isInvalidEmail) e.preventDefault();
+                  }}
                 />
               </div>
             )}
@@ -152,9 +179,12 @@ class App extends React.Component {
             exact
             render={() => (
               <div id="mesblkml-process">
-                <h2>Sending Email</h2>
-                {JSON.stringify(this.state.email)}
-                <Sender />
+                <h2>Send</h2>
+                <Sender
+                  {...progress}
+                  onSentCountChange={this.handleSentCountChange}
+                  onRestart={this.handleRestart}
+                />
               </div>
             )}
           />

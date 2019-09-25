@@ -9,10 +9,16 @@ class Progress extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      fetching: true,
-      sentCount: props.sentCount || 0,
-      customerCount: props.customerCount || 0
+      fetching: true
     };
+  }
+
+  componentDidMount() {
+    this.mounted = true;
+  }
+
+  componentWillUnmount() {
+    this.mounted = false;
   }
 
   renderFetchRequest() {
@@ -22,23 +28,16 @@ class Progress extends React.Component {
         resource={resources.error.code500 && resources.progress.pass}
         progressMessage="Fetching progress"
         onSuccess={obj => {
-          this.setState(prevState => ({
-            sentCount: prevState.sentCount + 1,
-            customerCount: obj.customerCount
-          }));
-          /*
-          this.setState({
-            sentCount: obj.sentCount,
-            customerCount: obj.customerCount
-          });
-          */
+          console.log(this.props);
+          this.mounted &&
+            this.props.onSentCountChange(this.props.sentCount + 1);
         }}
         validateResponse={json => !json.err}
         onComplete={() => {
-          this.setState({ fetching: false });
+          this.mounted && this.setState({ fetching: false });
           if (!this.props.stop) {
             setTimeout(
-              () => this.setState({ fetching: true }),
+              () => this.mounted && this.setState({ fetching: true }),
               this.props.delay || 2000
             );
           }
@@ -48,25 +47,15 @@ class Progress extends React.Component {
   }
 
   render() {
-    const {
-      stop,
-      sentCount: pSentCount,
-      customerCount: pCustomerCount
-    } = this.props;
-    const {
-      fetching,
-      sentCount: sSentCount,
-      customerCount: sCustomerCount
-    } = this.state;
+    const { stop, sentCount, customerCount } = this.props;
     return (
       <div className="mesblkml-progress">
-        <div className="mesblkml-progress__status">
-          {!stop && fetching ? this.renderFetchRequest() : null}
-        </div>
         <div className="mesblkml-progress__stats">
-          <span>{stop ? pSentCount : sSentCount}</span> /{" "}
-          <span>{stop ? pCustomerCount : sCustomerCount}</span>{" "}
+          <span>{sentCount}</span> / <span>{customerCount}</span>{" "}
           <span>emails sent</span>
+        </div>
+        <div className="mesblkml-progress__status">
+          {!stop && this.state.fetching ? this.renderFetchRequest() : null}
         </div>
       </div>
     );

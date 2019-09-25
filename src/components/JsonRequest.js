@@ -95,7 +95,7 @@ class JsonRequest extends React.Component {
         <div>
           {this.props.progressMessage} ...{" "}
           <img
-            style={{ verticalAlign: "bottom" }}
+            style={{ lineHeight: "1em", verticalAlign: "middle" }}
             src="https://i.ibb.co/7V89Rtr/spinner.gif"
             alt="loader gif"
           />
@@ -113,7 +113,14 @@ class JsonRequest extends React.Component {
         <div>
           <Highlight v={`Failed: ${this.props.progressMessage} `} />
           {detail ? `(${detail}) ` : " "}
-          <button onClick={() => this.fetch()}>Retry</button>
+          <button
+            onClick={() => {
+              this.fetch();
+              this.props.onRetry();
+            }}
+          >
+            Retry
+          </button>
         </div>
       );
     }
@@ -121,7 +128,7 @@ class JsonRequest extends React.Component {
   }
 }
 JsonRequest.defaultProps = {
-  baseUrl: "https://www.mocky.io/v2"
-  //data: { "mocky-delay": "3500ms" }
+  baseUrl: "https://www.mocky.io/v2",
+  data: { "mocky-delay": "5000ms" }
 };
 export default JsonRequest;

@@ -24,6 +24,7 @@ export const resources = {
     pass: "5d8aa2493500005c00d46a0d"
   },
   error: {
-    code500: "5d87ec3a3300006e00d7d704"
+    code500: "5d87ec3a3300006e00d7d704",
+    custom: "5d8bfa142e00005100abd65f"
   }
 };

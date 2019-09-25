@@ -19,7 +19,7 @@ function Composer(props) {
   ));
   return (
     <div className="mesblkml-composer">
-      <Field isValid={dirty && !validation.postcode ? false : true}>
+      <Field isValid={dirty ? validation.postcode : true}>
         <select
           value={postcode}
           name="postcode"
@@ -31,7 +31,7 @@ function Composer(props) {
           {options}
         </select>
       </Field>
-      <Field isValid={dirty && !validation.subject ? false : true}>
+      <Field isValid={dirty ? validation.subject : true}>
         <input
           type="text"
           value={subject}
@@ -40,7 +40,7 @@ function Composer(props) {
           readOnly={readOnly}
         />
       </Field>
-      <Field isValid={dirty && !validation.message ? false : true}>
+      <Field isValid={dirty ? validation.message : true}>
         <textarea
           value={message}
           onChange={onChange}

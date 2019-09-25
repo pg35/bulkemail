@@ -39,7 +39,7 @@ class JsonRequest extends React.Component {
       onSuccess,
       onError,
       onComplete,
-      validateResponse
+      onValidateResponse
     } = this.props;
     const url = baseUrl + (resource ? "/" + resource : "");
     const options = {
@@ -65,7 +65,7 @@ class JsonRequest extends React.Component {
         }
       })
       .then(json => {
-        if (validateResponse && !validateResponse(json)) {
+        if (onValidateResponse && !onValidateResponse(json)) {
           throwError(json.errMsg ? json.errMsg : "Invalid response", json);
         }
         onSuccess && onSuccess(json);
@@ -128,7 +128,8 @@ class JsonRequest extends React.Component {
   }
 }
 JsonRequest.defaultProps = {
-  baseUrl: "https://www.mocky.io/v2",
-  data: { "mocky-delay": "5000ms" }
+  onValidateResponse: json => !json.err,
+  baseUrl: "https://www.mocky.io/v2"
+  //data: { "mocky-delay": "5000ms" }
 };
 export default JsonRequest;

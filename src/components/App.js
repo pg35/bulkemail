@@ -75,7 +75,7 @@ class App extends React.Component {
   renderInitRequest() {
     return (
       <JsonRequest
-        resource={resources.error.code500 && resources.app.hasSavedEmail}
+        resource={resources.error.custom && resources.app.hasSavedEmail}
         progressMessage={
           !this.state.initCount ? "Initializing App" : "Fetching status"
         }
@@ -89,7 +89,7 @@ class App extends React.Component {
             quota: obj.quota
           }));
         }}
-        validateResponse={json => !json.err}
+        onValidateResponse={json => !json.err}
         onComplete={() => "app oncomplete called"}
       />
     );

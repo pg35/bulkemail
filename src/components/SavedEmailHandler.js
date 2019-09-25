@@ -79,7 +79,6 @@ class SavedEmailHandler extends React.Component {
           });
           this.props.onSavedEmailDelete();
         }}
-        validateResponse={json => !json.err}
       />
     );
   }

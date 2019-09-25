@@ -31,7 +31,6 @@ class Sender extends React.Component {
         }
         onError={err => this.setState({ fetchProgress: false })}
         onRetry={() => this.setState({ fetchProgress: true })}
-        validateResponse={json => !json.err}
       />
     );
   }

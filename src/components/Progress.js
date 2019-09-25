@@ -32,7 +32,6 @@ class Progress extends React.Component {
           this.mounted &&
             this.props.onSentCountChange(this.props.sentCount + 1);
         }}
-        validateResponse={json => !json.err}
         onComplete={() => {
           this.mounted && this.setState({ fetching: false });
           if (!this.props.stop) {

@@ -17,7 +17,7 @@ class App extends React.Component {
       initCount: 0,
       isNewEmail: true,
       email: {
-        postcode: "",
+        postcodes: null,
         subject: "",
         message: "",
         dirty: false
@@ -33,7 +33,7 @@ class App extends React.Component {
 
   buildEmailObj(obj) {
     return {
-      postcode: (obj && obj.postcode) || "",
+      postcodes: (obj && obj.postcodes) || null,
       subject: (obj && obj.subject) || "",
       message: (obj && obj.message) || "",
       dirty: !!obj
@@ -60,6 +60,15 @@ class App extends React.Component {
     const { name, value } = e.target;
     this.setState({
       email: { ...this.state.email, [name]: value }
+    });
+  };
+
+  handlePostcodeChange = selectedOptionsData => {
+    this.setState({
+      email: {
+        ...this.state.email,
+        postcodes: selectedOptionsData
+      }
     });
   };
 
@@ -102,7 +111,14 @@ class App extends React.Component {
     console.log("app state", this.state);
     const { initCount, isNewEmail, email, progress, quota } = this.state;
     const emailValidation = Object.keys(email).reduce(
-      (o, p) => ({ ...o, [p]: !!String(email[p]).trim() }),
+      (o, p) => ({
+        ...o,
+        [p]:
+          email[p] &&
+          (Array.isArray(email[p])
+            ? !!email[p].length
+            : !!String(email[p]).trim())
+      }),
       {}
     );
     const isInvalidEmail = Object.keys(emailValidation).filter(
@@ -136,6 +152,7 @@ class App extends React.Component {
                   allPostcodes={this.props.allPostcodes}
                   onChange={this.handleEmailDraftChange}
                   validation={emailValidation}
+                  onPostcodeChange={this.handlePostcodeChange}
                 />
                 {email.dirty && isInvalidEmail ? (
                   <div className="mes-error">

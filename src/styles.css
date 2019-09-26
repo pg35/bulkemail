@@ -82,16 +82,20 @@
   text-align: left;
   margin-bottom: 16px;
 }
-.mes-field input,
+.mes-field input[type="text"],
 .mes-field select,
 .mes-field textarea {
   width: 100%;
 }
 
+.mes-field--error .mes-multiseclct,
 .mes-field--error input,
 .mes-field--error select,
 .mes-field--error textarea {
   border: 1px solid red;
+}
+.mes-field--error .mes-multiseclct > div:first-child {
+  border: none;
 }
 .mes-error {
   color: red;

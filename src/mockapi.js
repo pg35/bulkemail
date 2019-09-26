@@ -10,8 +10,8 @@ export const resources = {
     pass: "5d857913320000410f07b267"
   },
   app: {
-    /*{"err":0,"savedEmail":{"clientId":5894,"postcode":"abc","subject":"first email","message":"first emial body","sentCount":52, "customerCount": 100},"quota":{"limit":100,"used":55,"nextRenewal":"in 2 days"}}*/
-    hasSavedEmail: "5d87e7a83300005e00d7d6ff",
+    /*{"err":0,"savedEmail":{"clientId":5894,"postcodes":[{"value":"BT13","label":"BT13"},{"value":"BT32","label":"BT32"},{"value":"BT17","label":"BT17"}],"subject":"first email","message":"first emial body","sentCount":52,"customerCount":100},"quota":{"limit":100,"used":55,"nextRenewal":"in 2 days"}}*/
+    hasSavedEmail: "5d8d155b2e0000fbcfabdec9",
     noSavedEmail: "5d87dc2034000094910a15c6"
   },
   delSavedEmail: {

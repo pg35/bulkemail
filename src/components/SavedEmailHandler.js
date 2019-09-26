@@ -15,13 +15,17 @@ class SavedEmailHandler extends React.Component {
   }
 
   renderLastEmailInfo() {
-    const { postcode, sentCount, customerCount } = this.props.savedEmail;
+    const { postcodes, sentCount, customerCount } = this.props.savedEmail;
     const remaining = customerCount - sentCount;
     return (
       <div>
         <div>
-          Previously, email destined for postcode <Highlight v={postcode} /> was
-          sent to <Highlight v={sentCount} /> out of{" "}
+          Previously, email destined for{" "}
+          {plural(postcodes.length, "postcodes", "postcode") + " "}
+          <span>
+            <Highlight v={postcodes.map(o => o.value)} />
+          </span>{" "}
+          was sent to <Highlight v={sentCount} /> out of{" "}
           <Highlight v={customerCount} />
           {" " + plural(customerCount, "customers", "customer")}.
           <br />
@@ -58,7 +62,7 @@ class SavedEmailHandler extends React.Component {
                 Delete Saved Email
               </Link>
               <Link to="/preview" style={{ marginLeft: "20px" }}>
-                Preview Saved Email
+                Preview & Send Saved Email
               </Link>
             </div>
           )}

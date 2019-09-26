@@ -1,35 +1,54 @@
 import React from "react";
 import Field from "./Field";
+import MySelect, {
+  Option,
+  MultiValue,
+  ValueContainer,
+  animatedComponents
+} from "./MySelect.js";
 
 function Composer(props) {
   const {
-    postcode,
+    postcodes,
     subject,
     message,
     allPostcodes,
     readOnly,
     onChange,
     dirty,
-    validation
+    validation,
+    onPostcodeChange
   } = props;
-  const options = allPostcodes.map(pc => (
-    <option key={pc} value={pc}>
-      {pc}
-    </option>
-  ));
+
+  const optionsData = allPostcodes.map(postcode => ({
+    value: postcode,
+    label: postcode
+  }));
+  /*const selectedOptionsData = postcodes.map(postcode => ({
+    value: postcode,
+    label: postcode
+  }));
+  console.log("render - selectedOptionsData", selectedOptionsData);
+  */
   return (
     <div className="mesblkml-composer">
-      <Field isValid={dirty ? validation.postcode : true}>
-        <select
-          value={postcode}
-          name="postcode"
-          onChange={readOnly ? () => {} : onChange}
-        >
-          <option key={allPostcodes.length} value="">
-            Select Postcode
-          </option>
-          {options}
-        </select>
+      <Field isValid={dirty ? validation.postcodes : true}>
+        <MySelect
+          className="mes-multiseclct"
+          options={optionsData}
+          isMulti
+          closeMenuOnSelect={false}
+          hideSelectedOptions={false}
+          components={{
+            Option,
+            MultiValue,
+            ValueContainer,
+            animatedComponents
+          }}
+          onChange={onPostcodeChange}
+          allowSelectAll={true}
+          value={postcodes}
+        />
       </Field>
       <Field isValid={dirty ? validation.subject : true}>
         <input

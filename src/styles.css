@@ -1,13 +1,21 @@
 #mesblkml {
   text-align: center;
 }
-/*common*/
-#mesblkml > div {
-  display: block;
-  margin-bottom: 20px;
+#mesblkml a {
+  font-size: 1.3em;
+  text-decoration: none;
 }
-
-/*header*/
+/*utils */
+.mes-hvcenter {
+  height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/*quota*/
+.mesblkml-quota {
+  margin-top: 30px;
+}
 .mesblkml-quota table {
   width: 250px;
   border-collapse: collapse;
@@ -19,30 +27,44 @@
   border: 1px solid;
 }
 
+/*sender*/
+.mesblkml-sender__status {
+  font-size: 1.3em;
+  margin-bottom: 20px;
+}
+
 /*progress*/
 .mesblkml-progress__stats {
-  font-size: 3em;
+  font-size: 2em;
 }
 .mesblkml-progress__stats > span:first-child {
   font-weight: bold;
 }
 .mesblkml-progress__stats > span:last-child {
-  font-size: 0.5em;
+  font-size: 0.8em;
 }
 
 /*result*/
 .mesblkml-result {
-  margin-top: 30px;
+  margin-top: 20px;
 }
 .mesblkml-result > div:first-child {
-  font-size: 3em;
-  margin-bottom: 16px;
+  font-size: 2.5em;
+  margin-bottom: 10px;
   font-weight: bold;
+  border-top: solid;
+  padding-top: 10px;
 }
 .mesblkml-result > div:last-child {
-  font-size: 1.2em;
+  font-size: 1.1em;
+}
+.mesblkml-retart {
+  margin-top: 20px;
 }
 /*navigation*/
+.mesblkml-navigation {
+  margin-top: 40px;
+}
 .mesblkml-navigation:after {
   display: table;
   clear: both;

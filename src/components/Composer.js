@@ -46,6 +46,7 @@ function Composer(props) {
           onChange={onChange}
           name="message"
           readOnly={readOnly}
+          rows="10"
         />
       </Field>
     </div>

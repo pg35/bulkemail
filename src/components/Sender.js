@@ -20,7 +20,7 @@ class Sender extends React.Component {
   renderSendRequest() {
     return (
       <JsonRequest
-        data={{ clientId: this.props.clientId, "mocky-delay": "1000ms" }}
+        data={{ clientId: this.props.clientId, "mocky-delay": "60000ms" }}
         resource={resources.error.code500 && resources.sender.pass}
         progressMessage="Sending email"
         onSuccess={obj =>
@@ -39,10 +39,10 @@ class Sender extends React.Component {
     const { sentCount, customerCount, onRestart } = this.props;
     const element = sending ? (
       <div>
-        <div style={{ marginBottom: "20px", fontSize: "2em" }}>
+        <div className="mesblkml-sender__status">
           {this.renderSendRequest()}
         </div>
-        {fetchProgress && <Progress {...this.props} />}
+        <Progress {...this.props} stop={!fetchProgress} />
       </div>
     ) : (
       <div>
@@ -55,15 +55,16 @@ class Sender extends React.Component {
           <div>Completed</div>
           <div>{message}</div>
         </div>
-
-        <Link
-          to="/"
-          onClick={() => {
-            onRestart();
-          }}
-        >
-          Home
-        </Link>
+        <div className="mesblkml-retart">
+          <Link
+            to="/"
+            onClick={() => {
+              onRestart();
+            }}
+          >
+            Restart
+          </Link>
+        </div>
         <div />
       </div>
     );

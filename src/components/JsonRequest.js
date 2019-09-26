@@ -92,13 +92,15 @@ class JsonRequest extends React.Component {
   render() {
     if (this.state.fetching) {
       return (
-        <div>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center"
+          }}
+        >
           {this.props.progressMessage} ...{" "}
-          <img
-            style={{ lineHeight: "1em", verticalAlign: "middle" }}
-            src="https://i.ibb.co/7V89Rtr/spinner.gif"
-            alt="loader gif"
-          />
+          <img src="https://i.ibb.co/7V89Rtr/spinner.gif" alt="loader gif" />
         </div>
       );
     }
@@ -129,7 +131,7 @@ class JsonRequest extends React.Component {
 }
 JsonRequest.defaultProps = {
   onValidateResponse: json => !json.err,
-  baseUrl: "https://www.mocky.io/v2"
-  //data: { "mocky-delay": "5000ms" }
+  baseUrl: "https://www.mocky.io/v2",
+  data: { "mocky-delay": "5000ms" }
 };
 export default JsonRequest;

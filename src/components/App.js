@@ -89,7 +89,6 @@ class App extends React.Component {
             quota: obj.quota
           }));
         }}
-        onValidateResponse={json => !json.err}
         onComplete={() => "app oncomplete called"}
       />
     );
@@ -111,7 +110,7 @@ class App extends React.Component {
     ).length;
 
     return !(initCount % 2) ? (
-      this.renderInitRequest()
+      <div className="mes-hvcenter">{this.renderInitRequest()}</div>
     ) : (
       <Router initialEntries={["/", "/compose", "/preview"]}>
         <Switch>
@@ -170,6 +169,15 @@ class App extends React.Component {
                   prevLabel={isNewEmail ? "Compose" : "Home"}
                   nextPath="/process"
                   nextLabel="Confirm & Send"
+                  onNext={e => {
+                    if (
+                      !window.confirm(
+                        `Are you sure to send this email to ${progress.customerCount -
+                          progress.sentCount} customer(s)?`
+                      )
+                    )
+                      e.preventDefault();
+                  }}
                 />
               </div>
             )}
@@ -178,8 +186,7 @@ class App extends React.Component {
             path="/process"
             exact
             render={() => (
-              <div id="mesblkml-process">
-                <h2>Send</h2>
+              <div id="mesblkml-process" className="mes-hvcenter">
                 <Sender
                   {...progress}
                   onSentCountChange={this.handleSentCountChange}

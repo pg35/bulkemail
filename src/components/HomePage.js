@@ -7,7 +7,11 @@ function HomePage(props) {
   console.log("homepage ", props);
   return (
     <div id="mesblkml-home">
-      <h2>Home</h2>
+      <h2>Bulk Email</h2>
+      <p>
+        Send email to postcode to have it sent to all Woocommerce customers
+        having the same billing postcode
+      </p>
       <Quota {...props.quota} />
       <br />
       <SavedEmailHandler {...props} />

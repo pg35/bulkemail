@@ -40,7 +40,7 @@ class SavedEmailHandler extends React.Component {
                 onClick={e => {
                   if (
                     window.confirm(
-                      `The saved email is still to send to ${remaining} ${plural(
+                      `The saved email is still to be sent to ${remaining} ${plural(
                         customerCount,
                         "customers",
                         "customer"

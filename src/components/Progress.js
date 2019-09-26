@@ -54,7 +54,11 @@ class Progress extends React.Component {
           <span>emails sent</span>
         </div>
         <div className="mesblkml-progress__status">
-          {!stop && this.state.fetching ? this.renderFetchRequest() : null}
+          {!stop && this.state.fetching ? (
+            this.renderFetchRequest()
+          ) : (
+            <div>&nbsp;</div>
+          )}
         </div>
       </div>
     );

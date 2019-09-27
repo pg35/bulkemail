@@ -82,16 +82,21 @@
   text-align: left;
   margin-bottom: 16px;
 }
-.mes-field input[type="text"],
-.mes-field select,
-.mes-field textarea {
+.mes-field > div > input[type="text"],
+.mes-field > div > textarea {
   width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+  background-color: hsl(0, 0%, 100%);
+  border: 1px solid hsl(0, 0%, 80%);
+  border-radius: 4px;
 }
-
+.mes-field > div > input[type="text"] {
+  height: 38px;
+}
 .mes-field--error .mes-multiseclct,
-.mes-field--error input,
-.mes-field--error select,
-.mes-field--error textarea {
+.mes-field--error > div > input[type="text"],
+.mes-field--error > div > textarea {
   border: 1px solid red;
 }
 .mes-field--error .mes-multiseclct > div:first-child {
@@ -102,4 +107,27 @@
 }
 .mes-field > .mes-error {
   font-size: 0.9em;
+}
+
+/*preview*/
+.mes-row {
+  margin-bottom: 16px;
+  text-align: left;
+  position: relative;
+}
+.mes-row__heading {
+  font-weight: bold;
+  font-size: 1.1em;
+  margin-bottom: 5px;
+}
+@media (min-width: 768px) {
+  .mes-row__heading {
+    position: absolute;
+    width: 140px;
+    margin-bottom: 0;
+  }
+  .mes-row__detail {
+    margin-left: 150px;
+    padding: 0 2px;
+  }
 }

@@ -14,7 +14,7 @@ class SavedEmailHandler extends React.Component {
     };
   }
 
-  renderLastEmailInfo() {
+  renderSavedEmailInfo() {
     const { postcodes, sentCount, customerCount } = this.props.savedEmail;
     const remaining = customerCount - sentCount;
     return (
@@ -88,7 +88,7 @@ class SavedEmailHandler extends React.Component {
   }
   render() {
     const element = this.props.savedEmail ? (
-      this.renderLastEmailInfo()
+      this.renderSavedEmailInfo()
     ) : (
       <Link to="/compose">Compose Email</Link>
     );

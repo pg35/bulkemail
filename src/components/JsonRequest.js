@@ -71,14 +71,17 @@ class JsonRequest extends React.Component {
         onSuccess && onSuccess(json);
       })
       .catch(error => {
-        this.setState({ error });
-        onError && onError(error);
+        if (this.mounted) {
+          this.setState({ error });
+          onError && onError(error);
+        } else
+          console.log("json request::catching error when unmounted", error);
       })
       .finally(() => {
         if (this.mounted) {
           this.setState({ fetching: false });
           onComplete && onComplete();
-        }
+        } else console.log("json request::completed when unmounted");
       });
   }
 

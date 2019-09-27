@@ -4,6 +4,7 @@ import { Route, Switch } from "react-router-dom";
 
 import HomePage from "./HomePage";
 import Composer from "./Composer";
+import Previewer from "./Previewer";
 import Sender from "./Sender";
 import Navigation from "./Navigation";
 import JsonRequest from "./JsonRequest";
@@ -20,7 +21,8 @@ class App extends React.Component {
         postcodes: null,
         subject: "",
         message: "",
-        dirty: false
+        dirty: false,
+        touched: {}
       },
       progress: {
         sentCount: 0,
@@ -36,7 +38,8 @@ class App extends React.Component {
       postcodes: (obj && obj.postcodes) || null,
       subject: (obj && obj.subject) || "",
       message: (obj && obj.message) || "",
-      dirty: !!obj
+      dirty: !!obj,
+      touched: {}
     };
   }
 
@@ -59,7 +62,12 @@ class App extends React.Component {
   handleEmailDraftChange = e => {
     const { name, value } = e.target;
     this.setState({
-      email: { ...this.state.email, [name]: value }
+      email: {
+        ...this.state.email,
+        [name]: value,
+        dirty: true,
+        touched: { ...this.state.email.touched, [name]: 1 }
+      }
     });
   };
 
@@ -67,7 +75,9 @@ class App extends React.Component {
     this.setState({
       email: {
         ...this.state.email,
-        postcodes: selectedOptionsData
+        postcodes: selectedOptionsData,
+        dirty: true,
+        touched: { ...this.state.email.touched, postcodes: 1 }
       }
     });
   };
@@ -76,6 +86,19 @@ class App extends React.Component {
     this.setState({
       progress: { ...this.state.progress, sentCount: newCount }
     });
+  };
+
+  handlerPreviewGenerate = data => {
+    const obj = {
+      email: { ...this.state.email, dirty: false }
+    };
+    if (this.state.isNewEmail) {
+      obj["progress"] = {
+        ...this.state.progress,
+        customerCount: data.customerCount
+      };
+    }
+    this.setState(obj);
   };
 
   handleRestart = () =>
@@ -110,21 +133,23 @@ class App extends React.Component {
   render() {
     console.log("app state", this.state);
     const { initCount, isNewEmail, email, progress, quota } = this.state;
-    const emailValidation = Object.keys(email).reduce(
-      (o, p) => ({
-        ...o,
-        [p]:
-          email[p] &&
-          (Array.isArray(email[p])
-            ? !!email[p].length
-            : !!String(email[p]).trim())
-      }),
-      {}
-    );
+    const emailValidation = Object.keys(email)
+      .filter(p => "dirty" !== p && "touched" !== p)
+      .reduce(
+        (o, p) => ({
+          ...o,
+          [p]:
+            email[p] &&
+            (Array.isArray(email[p])
+              ? !!email[p].length
+              : !!String(email[p]).trim())
+        }),
+        {}
+      );
     const isInvalidEmail = Object.keys(emailValidation).filter(
       p => !emailValidation[p]
     ).length;
-
+    console.log(emailValidation, isInvalidEmail);
     return !(initCount % 2) ? (
       <div className="mes-hvcenter">{this.renderInitRequest()}</div>
     ) : (
@@ -154,21 +179,26 @@ class App extends React.Component {
                   validation={emailValidation}
                   onPostcodeChange={this.handlePostcodeChange}
                 />
-                {email.dirty && isInvalidEmail ? (
-                  <div className="mes-error">
-                    Please fill in all fields before proceeding to Preview
-                  </div>
-                ) : null}
                 <Navigation
                   prevPath="/"
                   prevLabel="Home"
                   nextPath="/preview"
                   nextLabel="Preview"
                   onNext={e => {
+                    const dirty = this.state.email.dirty;
                     this.setState({
-                      email: { ...this.state.email, dirty: true }
+                      email: {
+                        ...this.state.email,
+                        dirty: true,
+                        touched: { postcodes: 1, subject: 1, message: 1 }
+                      }
                     });
                     if (isInvalidEmail) e.preventDefault();
+                    else {
+                      this.setState({
+                        email: { ...this.state.email, dirty, touched: {} }
+                      });
+                    }
                   }}
                 />
               </div>
@@ -180,7 +210,11 @@ class App extends React.Component {
             render={() => (
               <div id="mesblkml-preview">
                 <h2>Preview Email</h2>
-                {JSON.stringify(this.state.email)}
+                <Previewer
+                  email={this.state.email}
+                  progress={this.state.progress}
+                  onPreviewGenerate={this.handlerPreviewGenerate}
+                />
                 <Navigation
                   prevPath={isNewEmail ? "/compose" : "/"}
                   prevLabel={isNewEmail ? "Compose" : "Home"}

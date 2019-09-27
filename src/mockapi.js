@@ -23,6 +23,9 @@ export const resources = {
   sender: {
     pass: "5d8aa2493500005c00d46a0d"
   },
+  previewer: {
+    pass: "5d8e3f3c3100003e9f2b541e"
+  },
   error: {
     code500: "5d87ec3a3300006e00d7d704",
     custom: "5d8bfa142e00005100abd65f"

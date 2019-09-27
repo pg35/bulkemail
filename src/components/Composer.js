@@ -7,6 +7,13 @@ import MySelect, {
   animatedComponents
 } from "./MySelect.js";
 
+const sampleMessage = `Hi [name],
+
+We are delighted to inform you about our annual sales gala starting on the 1st of next month.
+
+Regards,
+Admin`;
+
 function Composer(props) {
   const {
     postcodes,
@@ -17,7 +24,8 @@ function Composer(props) {
     onChange,
     dirty,
     validation,
-    onPostcodeChange
+    onPostcodeChange,
+    touched
   } = props;
 
   const optionsData = allPostcodes.map(postcode => ({
@@ -32,7 +40,7 @@ function Composer(props) {
   */
   return (
     <div className="mesblkml-composer">
-      <Field isValid={dirty ? validation.postcodes : true}>
+      <Field isValid={dirty && touched.postcodes ? validation.postcodes : true}>
         <MySelect
           className="mes-multiseclct"
           options={optionsData}
@@ -48,25 +56,32 @@ function Composer(props) {
           onChange={onPostcodeChange}
           allowSelectAll={true}
           value={postcodes}
+          placeholder="Select Postcode(s)"
         />
       </Field>
-      <Field isValid={dirty ? validation.subject : true}>
+      <Field isValid={dirty && touched.subject ? validation.subject : true}>
         <input
           type="text"
           value={subject}
           onChange={onChange}
           name="subject"
           readOnly={readOnly}
+          placeholder="Write Subject"
         />
       </Field>
-      <Field isValid={dirty ? validation.message : true}>
+      <Field isValid={dirty && touched.message ? validation.message : true}>
         <textarea
           value={message}
           onChange={onChange}
           name="message"
           readOnly={readOnly}
           rows="10"
+          placeholder="Write Message"
         />
+      </Field>
+      <Field isValid={true}>
+        *use [name] to insert customer billing name in the message e.g. Hi
+        [name], ....
       </Field>
     </div>
   );

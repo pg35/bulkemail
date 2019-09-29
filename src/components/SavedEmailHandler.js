@@ -39,7 +39,7 @@ class SavedEmailHandler extends React.Component {
           {this.state.deletingSavedEmail ? (
             this.renderDeleteRequest()
           ) : (
-            <div class="mes-stack">
+            <div className="mes-stack">
               <Link
                 to="/"
                 onClick={e => {

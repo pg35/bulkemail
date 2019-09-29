@@ -4,18 +4,14 @@ import Highlight from "./Highlight";
 import JsonRequest from "./JsonRequest";
 import { resources, plural } from "../util";
 
-class Previewer extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
-  renderPreview() {
+function Previewer(props) {
+  const renderPreview = () => {
     const {
       email: { postcodes, subject, message },
       progress: { sentCount, customerCount },
       quota: { limit, used },
       isNewEmail
-    } = this.props;
+    } = props;
     const remainingCustomers = customerCount - sentCount;
     const remainingQuota = limit - used;
     const feedback =
@@ -26,7 +22,7 @@ class Previewer extends React.Component {
       <div>
         <div className="mes-row">
           <div className="mes-row__heading">
-            {plural(postcodes.length > 1, "Postcodes", "Postcode")}
+            {plural(postcodes.length, "Postcodes", "Postcode")}
           </div>
           <div className="mes-row__detail">
             <Highlight
@@ -35,7 +31,7 @@ class Previewer extends React.Component {
             ({postcodes.length > 1 ? "all " : ""}having{" "}
             {postcodes.length > 1 ? "total " : ""}
             <Highlight v={customerCount} />{" "}
-            {plural(customerCount > 1, "customers", "customer")})
+            {plural(customerCount, "customers", "customer")})
           </div>
         </div>
         <div className="mes-row">
@@ -117,27 +113,26 @@ class Previewer extends React.Component {
         )}
       </div>
     );
-  }
+  };
 
-  renderGenerateRequest() {
+  const renderGenerateRequest = () => {
     return (
       <JsonRequest
         resource={resources.error.code500 && resources.previewer.pass}
         progressMessage="Generating preview"
         onSuccess={obj => {
           console.log("preview::", obj);
-          this.props.onPreviewGenerate(obj);
+          props.onPreviewGenerate(obj);
         }}
       />
     );
-  }
-  render() {
-    const element = this.props.email.dirty ? (
-      <div className="mes-hvcenter">{this.renderGenerateRequest()}</div>
-    ) : (
-      this.renderPreview()
-    );
-    return <div>{element}</div>;
-  }
+  };
+
+  const element = props.email.dirty ? (
+    <div className="mes-hvcenter">{renderGenerateRequest()}</div>
+  ) : (
+    renderPreview()
+  );
+  return <div>{element}</div>;
 }
 export default Previewer;

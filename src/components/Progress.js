@@ -1,9 +1,7 @@
 import React from "react";
 
-import Highlight from "./Highlight";
-import { Link } from "react-router-dom";
 import JsonRequest from "./JsonRequest";
-import { resources } from "../mockapi";
+import { resources } from "../util";
 
 class Progress extends React.Component {
   constructor(props) {

@@ -7,13 +7,6 @@ import MySelect, {
   animatedComponents
 } from "./MySelect.js";
 
-const sampleMessage = `Hi [name],
-
-We are delighted to inform you about our annual sales gala starting on the 1st of next month.
-
-Regards,
-Admin`;
-
 function Composer(props) {
   const {
     postcodes,
@@ -32,12 +25,7 @@ function Composer(props) {
     value: postcode,
     label: postcode
   }));
-  /*const selectedOptionsData = postcodes.map(postcode => ({
-    value: postcode,
-    label: postcode
-  }));
-  console.log("render - selectedOptionsData", selectedOptionsData);
-  */
+
   return (
     <div className="mesblkml-composer">
       <Field isValid={dirty && touched.postcodes ? validation.postcodes : true}>

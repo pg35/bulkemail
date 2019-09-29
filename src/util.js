@@ -1,3 +1,5 @@
+export const plural = (c, p, s) => (c > 1 ? p : s);
+
 //baseurl https://www.mocky.io/v2/
 export const resources = {
   resumer: {

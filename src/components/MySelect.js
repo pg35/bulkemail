@@ -92,7 +92,7 @@ export const ValueContainer = ({ children, ...props }) => {
 export const MultiValue = props => {
   let labelToBeDisplayed = `${props.data.label}, `;
   if (props.data.value === allOption.value) {
-    labelToBeDisplayed = "All is selected";
+    labelToBeDisplayed = "All Postcodes";
   }
   return (
     <components.MultiValue {...props}>

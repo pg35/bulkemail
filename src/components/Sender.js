@@ -1,11 +1,10 @@
 import React from "react";
 
-import Highlight from "./Highlight";
 import { Link } from "react-router-dom";
 import JsonRequest from "./JsonRequest";
 import Progress from "./Progress";
 
-import { resources } from "../mockapi";
+import { resources } from "../util";
 
 class Sender extends React.Component {
   constructor(props) {
@@ -20,9 +19,9 @@ class Sender extends React.Component {
   renderSendRequest() {
     return (
       <JsonRequest
-        data={{ clientId: this.props.clientId, "mocky-delay": "60000ms" }}
+        data={{ clientId: this.props.clientId, "mocky-delay": "6000ms" }}
         resource={resources.error.code500 && resources.sender.pass}
-        progressMessage="Sending email"
+        progressMessage="Processing"
         onSuccess={obj =>
           this.setState({
             sending: false,
@@ -43,6 +42,18 @@ class Sender extends React.Component {
           {this.renderSendRequest()}
         </div>
         <Progress {...this.props} stop={!fetchProgress} />
+        {!fetchProgress && (
+          <div className="mesblkml-retart">
+            <Link
+              to="/"
+              onClick={() => {
+                onRestart();
+              }}
+            >
+              Home
+            </Link>
+          </div>
+        )}
       </div>
     ) : (
       <div>
@@ -62,7 +73,7 @@ class Sender extends React.Component {
               onRestart();
             }}
           >
-            Restart
+            Home
           </Link>
         </div>
         <div />

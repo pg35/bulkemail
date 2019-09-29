@@ -9,7 +9,7 @@ function Highlight(props) {
       </span>
     ))
   ) : (
-    <strong>{props.v}</strong>
+    <strong {...props}>{props.v}</strong>
   );
   return item;
 }

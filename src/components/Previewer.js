@@ -2,9 +2,8 @@ import React from "react";
 
 import Highlight from "./Highlight";
 import JsonRequest from "./JsonRequest";
-import { resources } from "../mockapi";
+import { resources, plural } from "../util";
 
-const plural = (c, p, s) => (c > 1 ? p : s);
 class Previewer extends React.Component {
   constructor(props) {
     super(props);
@@ -13,13 +12,21 @@ class Previewer extends React.Component {
   renderPreview() {
     const {
       email: { postcodes, subject, message },
-      progress: { customerCount }
+      progress: { sentCount, customerCount },
+      quota: { limit, used },
+      isNewEmail
     } = this.props;
+    const remainingCustomers = customerCount - sentCount;
+    const remainingQuota = limit - used;
+    const feedback =
+      remainingCustomers > remainingQuota
+        ? `There is not enough quota remaining to send ${remainingCustomers} emails. Only ${remainingQuota} emails can be sent.`
+        : "";
     return (
       <div>
         <div className="mes-row">
           <div className="mes-row__heading">
-            {plural(postcodes.length, "Postcodes", "Postcode")}
+            {plural(postcodes.length > 1, "Postcodes", "Postcode")}
           </div>
           <div className="mes-row__detail">
             <Highlight
@@ -45,6 +52,69 @@ class Previewer extends React.Component {
             }}
           />
         </div>
+        <div className="mes-row">
+          <div className="mes-row__heading">Total customers to serve</div>
+          <div className="mes-row__detail">
+            {customerCount}{" "}
+            <small>(emails will need to be sent for selected postcodes)</small>
+          </div>
+        </div>
+        {!isNewEmail && (
+          <div className="mes-row">
+            <div className="mes-row__heading">Customers already served</div>
+            <div className="mes-row__detail">
+              {sentCount} <small>(emails have already been sent)</small>
+            </div>
+          </div>
+        )}
+        {!isNewEmail && (
+          <div className="mes-row">
+            <div className="mes-row__heading">
+              Customers remaining to be served
+            </div>
+            <div className="mes-row__detail">
+              {remainingCustomers}{" "}
+              <small>(emails are remaining to be sent)</small>
+            </div>
+          </div>
+        )}
+        <div className="mes-row">
+          <div className="mes-row__heading">Qutoa</div>
+          <div className="mes-row__detail">{limit}</div>
+        </div>
+        <div className="mes-row">
+          <div className="mes-row__heading">Remaining Qutoa</div>
+          <div className="mes-row__detail">{remainingQuota}</div>
+        </div>
+
+        <div className="mes-row" style={{ marginTop: "2em" }}>
+          <small>
+            <strong>Processing Info:</strong>
+            <br />
+            - Emails will be sent until all emails are sent, qutoa rans out or
+            some unexpected error occurs.
+            <br />
+            - If quota is renewed during the processing, it will be consumed.
+            <br />
+            - If not all emails are sent, data will be saved to resume the
+            processing later to send remaining emails.
+            <br />
+          </small>
+        </div>
+        {feedback && (
+          <div
+            className="mes-row"
+            style={{
+              textAlign: "center",
+              fontSize: "1.2em",
+              marginTop: "2em",
+              color: "#cc3300",
+              fontWeight: "bold"
+            }}
+          >
+            {feedback}
+          </div>
+        )}
       </div>
     );
   }
@@ -62,9 +132,11 @@ class Previewer extends React.Component {
     );
   }
   render() {
-    const element = this.props.email.dirty
-      ? this.renderGenerateRequest()
-      : this.renderPreview();
+    const element = this.props.email.dirty ? (
+      <div className="mes-hvcenter">{this.renderGenerateRequest()}</div>
+    ) : (
+      this.renderPreview()
+    );
     return <div>{element}</div>;
   }
 }

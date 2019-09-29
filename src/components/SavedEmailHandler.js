@@ -3,9 +3,8 @@ import React from "react";
 import Highlight from "./Highlight";
 import { Link } from "react-router-dom";
 import JsonRequest from "./JsonRequest";
-import { resources } from "../mockapi";
+import { resources, plural } from "../util";
 
-const plural = (c, p, s) => (c > 1 ? p : s);
 class SavedEmailHandler extends React.Component {
   constructor(props) {
     super(props);
@@ -23,7 +22,9 @@ class SavedEmailHandler extends React.Component {
           Previously, email destined for{" "}
           {plural(postcodes.length, "postcodes", "postcode") + " "}
           <span>
-            <Highlight v={postcodes.map(o => o.value)} />
+            <Highlight
+              v={postcodes.filter(o => "*" !== o.value).map(o => o.value)}
+            />
           </span>{" "}
           was sent to <Highlight v={sentCount} /> out of{" "}
           <Highlight v={customerCount} />

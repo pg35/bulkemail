@@ -8,8 +8,9 @@ import Previewer from "./Previewer";
 import Sender from "./Sender";
 import Navigation from "./Navigation";
 import JsonRequest from "./JsonRequest";
+import Highlight from "./Highlight";
 
-import { resources } from "../mockapi";
+import { resources, plural } from "../util";
 
 class App extends React.Component {
   constructor(props) {
@@ -29,7 +30,11 @@ class App extends React.Component {
         customerCount: 0,
         clientId: ""
       },
-      quota: {}
+      quota: {
+        limit: 0,
+        used: 0,
+        nextRenewal: ""
+      }
     };
   }
 
@@ -211,8 +216,7 @@ class App extends React.Component {
               <div id="mesblkml-preview">
                 <h2>Preview Email</h2>
                 <Previewer
-                  email={this.state.email}
-                  progress={this.state.progress}
+                  {...this.state}
                   onPreviewGenerate={this.handlerPreviewGenerate}
                 />
                 <Navigation
@@ -221,12 +225,7 @@ class App extends React.Component {
                   nextPath="/process"
                   nextLabel="Confirm & Send"
                   onNext={e => {
-                    if (
-                      !window.confirm(
-                        `Are you sure to send this email to ${progress.customerCount -
-                          progress.sentCount} customer(s)?`
-                      )
-                    )
+                    if (!window.confirm(`Are you sure to send this email?`))
                       e.preventDefault();
                   }}
                 />
@@ -237,7 +236,25 @@ class App extends React.Component {
             path="/process"
             exact
             render={() => (
-              <div id="mesblkml-process" className="mes-hvcenter">
+              <div id="mesblkml-process">
+                <h2>Sending Email</h2>
+                <p>
+                  <small>having</small> subject{" "}
+                  <Highlight v={this.state.email.subject} />
+                </p>
+                <p>
+                  <small>to</small>{" "}
+                  {plural(
+                    this.state.email.postcodes.length > 1,
+                    "Postcodes",
+                    "Postcode"
+                  )}{" "}
+                  <Highlight
+                    v={this.state.email.postcodes
+                      .filter(o => "*" !== o.value)
+                      .map(o => o.value)}
+                  />
+                </p>
                 <Sender
                   {...progress}
                   onSentCountChange={this.handleSentCountChange}

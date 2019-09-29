@@ -2,15 +2,16 @@
   text-align: center;
 }
 #mesblkml a {
-  font-size: 1.3em;
+  font-size: 1.2em;
   text-decoration: none;
+}
+#mesblkml h2 {
+  text-decoration: underline;
 }
 /*utils */
 .mes-hvcenter {
-  height: 90vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: inline-block;
+  margin-top: 100px;
 }
 /*quota*/
 .mesblkml-quota {
@@ -28,14 +29,16 @@
 }
 
 /*sender*/
+.mesblkml-sender {
+  margin-top: 50px;
+}
 .mesblkml-sender__status {
-  font-size: 1.3em;
   margin-bottom: 20px;
 }
 
 /*progress*/
 .mesblkml-progress__stats {
-  font-size: 2em;
+  font-size: 1.4em;
 }
 .mesblkml-progress__stats > span:first-child {
   font-weight: bold;
@@ -46,21 +49,26 @@
 
 /*result*/
 .mesblkml-result {
-  margin-top: 20px;
+  margin-bottom: 30px;
+}
+.mesblkml-result:before {
+  width: 300px;
+  display: block;
+  border-top: 2px solid #aaa;
+  content: "";
+  margin: 0 auto;
+  max-width: 100%;
+  margin-bottom: 1em;
 }
 .mesblkml-result > div:first-child {
-  font-size: 2.5em;
+  font-size: 1.4em;
   margin-bottom: 10px;
   font-weight: bold;
-  border-top: solid;
-  padding-top: 10px;
 }
 .mesblkml-result > div:last-child {
   font-size: 1.1em;
 }
-.mesblkml-retart {
-  margin-top: 20px;
-}
+
 /*navigation*/
 .mesblkml-navigation {
   margin-top: 40px;
@@ -75,7 +83,7 @@
   float: left;
 }
 .mesblkml-navigation > a:last-child {
-  float: left;
+  float: right;
 }
 
 .mes-field {
@@ -117,17 +125,16 @@
 }
 .mes-row__heading {
   font-weight: bold;
-  font-size: 1.1em;
   margin-bottom: 5px;
 }
 @media (min-width: 768px) {
   .mes-row__heading {
     position: absolute;
-    width: 140px;
+    width: 240px;
     margin-bottom: 0;
   }
   .mes-row__detail {
-    margin-left: 150px;
+    margin-left: 250px;
     padding: 0 2px;
   }
 }

@@ -8,10 +8,21 @@
 #mesblkml h2 {
   text-decoration: underline;
 }
+
 /*utils */
 .mes-hvcenter {
   display: inline-block;
   margin-top: 100px;
+}
+.mes-stack > * {
+  display: block;
+  margin-bottom: 10px;
+}
+@media (min-width: 600px) {
+  .mes-stack > * {
+    display: inline-block;
+    margin-bottom: 0;
+  }
 }
 /*quota*/
 .mesblkml-quota {

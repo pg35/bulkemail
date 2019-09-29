@@ -245,9 +245,9 @@ class App extends React.Component {
                 <p>
                   <small>to</small>{" "}
                   {plural(
-                    this.state.email.postcodes.length > 1,
-                    "Postcodes",
-                    "Postcode"
+                    this.state.email.postcodes.length,
+                    "postcodes",
+                    "postcode"
                   )}{" "}
                   <Highlight
                     v={this.state.email.postcodes

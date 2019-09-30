@@ -98,18 +98,7 @@ function Previewer(props) {
           </small>
         </div>
         {feedback && (
-          <div
-            className="mes-row"
-            style={{
-              textAlign: "center",
-              fontSize: "1.2em",
-              marginTop: "2em",
-              color: "#cc3300",
-              fontWeight: "bold"
-            }}
-          >
-            {feedback}
-          </div>
+          <div className="mes-row mes-blkml-preview__feedback">{feedback}</div>
         )}
       </div>
     );

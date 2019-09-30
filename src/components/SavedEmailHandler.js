@@ -18,7 +18,7 @@ class SavedEmailHandler extends React.Component {
     const remaining = customerCount - sentCount;
     return (
       <div>
-        <div>
+        <div className="mes-para">
           Previously, email destined for{" "}
           {plural(postcodes.length, "postcodes", "postcode") + " "}
           <span>

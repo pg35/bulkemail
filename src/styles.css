@@ -1,5 +1,12 @@
 #mesblkml {
   text-align: center;
+  margin-bottom: 20px;
+}
+#mesblkml {
+  font-size: 16px;
+}
+#mesblkml p {
+  font-size: inherit;
 }
 #mesblkml a {
   font-size: 1.2em;
@@ -10,6 +17,9 @@
 }
 
 /*utils */
+.mes-para {
+  line-height: 1.5em;
+}
 .mes-hvcenter {
   display: inline-block;
   margin-top: 100px;
@@ -75,9 +85,6 @@
   font-size: 1.4em;
   margin-bottom: 10px;
   font-weight: bold;
-}
-.mesblkml-result > div:last-child {
-  font-size: 1.1em;
 }
 
 /*navigation*/
@@ -148,4 +155,10 @@
     margin-left: 250px;
     padding: 0 2px;
   }
+}
+.mes-blkml-preview__feedback {
+  text-align: center;
+  margin-top: 2em;
+  color: #cc3300;
+  font-weight: bold;
 }

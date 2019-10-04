@@ -134,6 +134,7 @@ class JsonRequest extends React.Component {
 }
 JsonRequest.defaultProps = {
   onValidateResponse: json => !json.err,
+  onRetry: () => {},
   baseUrl: "https://www.mocky.io/v2"
   //data: { "mocky-delay": "5000ms" }
 };

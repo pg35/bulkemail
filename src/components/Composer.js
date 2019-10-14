@@ -29,23 +29,25 @@ function Composer(props) {
   return (
     <div className="mesblkml-composer">
       <Field isValid={dirty && touched.postcodes ? validation.postcodes : true}>
-        <MySelect
-          className="mes-multiseclct"
-          options={optionsData}
-          isMulti
-          closeMenuOnSelect={false}
-          hideSelectedOptions={false}
-          components={{
-            Option,
-            MultiValue,
-            ValueContainer,
-            animatedComponents
-          }}
-          onChange={onPostcodeChange}
-          allowSelectAll={true}
-          value={postcodes}
-          placeholder="Select Postcode(s)"
-        />
+        <div style={{ padding: "2px 0" }}>
+          <MySelect
+            className="mes-multiseclct"
+            options={optionsData}
+            isMulti
+            closeMenuOnSelect={false}
+            hideSelectedOptions={false}
+            components={{
+              Option,
+              MultiValue,
+              ValueContainer,
+              animatedComponents
+            }}
+            onChange={onPostcodeChange}
+            allowSelectAll={true}
+            value={postcodes}
+            placeholder="Select Postcode(s)"
+          />
+        </div>
       </Field>
       <Field isValid={dirty && touched.subject ? validation.subject : true}>
         <input

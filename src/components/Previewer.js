@@ -14,10 +14,11 @@ function Previewer(props) {
     } = props;
     const remainingCustomers = customerCount - sentCount;
     const remainingQuota = limit - used;
-    const feedback =
-      remainingCustomers > remainingQuota
-        ? `There is not enough quota remaining to send ${remainingCustomers} emails. Only ${remainingQuota} emails can be sent.`
-        : "";
+    const feedback = !remainingQuota
+      ? "Quota has already been consumed"
+      : remainingCustomers > remainingQuota
+      ? `There is not enough quota remaining to send ${remainingCustomers} emails. Only ${remainingQuota} emails can be sent.`
+      : "";
     return (
       <div>
         <div className="mes-row">
@@ -105,8 +106,13 @@ function Previewer(props) {
   };
 
   const renderGenerateRequest = () => {
+    const postcodes = props.email.postcodes
+      .filter(o => "*" !== o.value)
+      .map(o => o.value)
+      .join(",");
     return (
       <JsonRequest
+        data={{ action: "mesbulkemailerpreview", postcodes }}
         resource={resources.error.code500 && resources.previewer.pass}
         progressMessage="Generating preview"
         onSuccess={obj => {

@@ -132,10 +132,11 @@ class JsonRequest extends React.Component {
     return null;
   }
 }
+const ajaxurl = "https://www.alfaoils.co.uk/wp-admin/admin-ajax.php";
 JsonRequest.defaultProps = {
   onValidateResponse: json => !json.err,
   onRetry: () => {},
-  baseUrl: "https://www.mocky.io/v2"
+  baseUrl: ajaxurl //"https://www.mocky.io/v2"
   //data: { "mocky-delay": "5000ms" }
 };
 export default JsonRequest;

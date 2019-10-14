@@ -22,13 +22,12 @@ class Progress extends React.Component {
   renderFetchRequest() {
     return (
       <JsonRequest
-        data={{ clientId: this.props.clientId }}
+        data={{ action: "mesbulkemailerprogress" }}
         resource={resources.error.code500 && resources.progress.pass}
         progressMessage="Fetching progress"
         onSuccess={obj => {
           console.log(this.props);
-          this.mounted &&
-            this.props.onSentCountChange(this.props.sentCount + 1);
+          this.mounted && this.props.onSentCountChange(obj.sentCount);
         }}
         onComplete={() => {
           this.mounted && this.setState({ fetching: false });

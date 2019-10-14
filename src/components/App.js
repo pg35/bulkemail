@@ -34,13 +34,18 @@ class App extends React.Component {
         limit: 0,
         used: 0,
         nextRenewal: ""
-      }
+      },
+      nonce: ""
     };
   }
 
   buildEmailObj(obj) {
+    let postcodes = (obj && obj.postcodes) || null;
+    if (postcodes)
+      postcodes = postcodes.split(",").map(x => ({ label: x, value: x }));
+    console.log("fetched postcd", postcodes);
     return {
-      postcodes: (obj && obj.postcodes) || null,
+      postcodes,
       subject: (obj && obj.subject) || "",
       message: (obj && obj.message) || "",
       dirty: !!obj,
@@ -52,7 +57,7 @@ class App extends React.Component {
     return {
       sentCount: (obj && obj.sentCount) || 0,
       customerCount: (obj && obj.customerCount) || 0,
-      clientId: (obj && obj.clientId) || ""
+      clientId: (obj && obj.clientId) || Date.now()
     };
   }
 
@@ -112,6 +117,7 @@ class App extends React.Component {
   renderInitRequest() {
     return (
       <JsonRequest
+        data={{ action: "mesbulkemailerinit" }}
         resource={resources.error.custom && resources.app.hasSavedEmail}
         progressMessage={
           !this.state.initCount ? "Initializing App" : "Fetching status"
@@ -123,7 +129,8 @@ class App extends React.Component {
             isNewEmail: !obj.savedEmail,
             email: this.buildEmailObj(obj.savedEmail),
             progress: this.buildProgressObj(obj.savedEmail),
-            quota: obj.quota
+            quota: obj.quota,
+            nonce: obj.nonce
           }));
         }}
         onComplete={() => "app oncomplete called"}
@@ -137,7 +144,7 @@ class App extends React.Component {
 
   render() {
     console.log("app state", this.state);
-    const { initCount, isNewEmail, email, progress, quota } = this.state;
+    const { initCount, isNewEmail, email, progress, quota, nonce } = this.state;
     const emailValidation = Object.keys(email)
       .filter(p => "dirty" !== p && "touched" !== p)
       .reduce(
@@ -167,6 +174,8 @@ class App extends React.Component {
               <HomePage
                 quota={quota}
                 savedEmail={isNewEmail ? null : { ...email, ...progress }}
+                nonce={nonce}
+                clientId={progress.clientId}
                 onSavedEmailDelete={this.handleSavedEmailDelete}
               />
             )}
@@ -256,7 +265,7 @@ class App extends React.Component {
                   />
                 </p>
                 <Sender
-                  {...progress}
+                  {...this.state}
                   onSentCountChange={this.handleSentCountChange}
                   onRestart={this.handleRestart}
                 />

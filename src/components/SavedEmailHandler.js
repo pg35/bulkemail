@@ -73,8 +73,15 @@ class SavedEmailHandler extends React.Component {
   }
 
   renderDeleteRequest() {
+    const { nonce, clientId } = this.props;
     return (
       <JsonRequest
+        data={{
+          action: "mesbulkemailerdelete",
+          nonce,
+          clientId
+        }}
+        method="GET"
         resource={resources.error.code500 && resources.delSavedEmail.pass}
         progressMessage="Deleting saved email"
         onSuccess={obj => {

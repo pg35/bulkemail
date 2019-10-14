@@ -2,7 +2,13 @@ import React from "react";
 import ReactDOM from "react-dom";
 
 import "./styles.css";
+import spinnerGif from "./spinner.gif";
 
+import withRequest, {
+  RequestProgress,
+  RequestError,
+  requestConfig
+} from "./components/withRequest";
 import App from "./components/App";
 import Quota from "./components/Quota";
 import Composer from "./components/Composer";
@@ -161,13 +167,29 @@ class Test extends React.Component {
   }
 }
 function App2() {
-  return (
-    <App
-      quota={{ limit: 100, used: 55, nextRenewal: "in" }}
-      allPostcodes={allPostcodes}
-    />
-  );
+  return <App allPostcodes={allPostcodes} />;
 }
+<RequestError
+  error={new Error("exception occured")}
+  showRetry={true}
+  onRetry={() => console.log("retry clicked")}
+/>;
+const WithReq = withRequest({
+  ...requestConfig,
+  message: "Initilializing App",
+  fetch: () =>
+    new Promise((resolve, reject) =>
+      setTimeout(() => reject(new Error("file not found")), 1000)
+    )
+})(({ data }) => data);
 
+class ErrorBoundry extends React.Component {
+  componentDidCatch(err, errInfo) {
+    console.log(err, errInfo);
+  }
+  render() {
+    return <App />;
+  }
+}
 const rootElement = document.getElementById("mesblkml");
 ReactDOM.render(<App2 />, rootElement);

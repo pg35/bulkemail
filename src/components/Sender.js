@@ -41,6 +41,7 @@ class Sender extends React.Component {
           isnew: isNewEmail ? "yes" : "no"
         }}
         method="GET"
+        canRetry={false}
         resource={resources.error.code500 && resources.sender.pass}
         progressMessage="Processing"
         onSuccess={obj =>

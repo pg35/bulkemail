@@ -118,14 +118,16 @@ class JsonRequest extends React.Component {
         <div>
           <Highlight v={`Failed: ${this.props.progressMessage} `} />
           {detail ? `(${detail}) ` : " "}
-          <button
-            onClick={() => {
-              this.fetch();
-              this.props.onRetry();
-            }}
-          >
-            Retry
-          </button>
+          {this.props.canRetry && (
+            <button
+              onClick={() => {
+                this.fetch();
+                this.props.onRetry();
+              }}
+            >
+              Retry
+            </button>
+          )}
         </div>
       );
     }
@@ -136,6 +138,7 @@ const ajaxurl = "https://www.alfaoils.co.uk/wp-admin/admin-ajax.php";
 JsonRequest.defaultProps = {
   onValidateResponse: json => !json.err,
   onRetry: () => {},
+  canRetry: true,
   baseUrl: ajaxurl //"https://www.mocky.io/v2"
   //data: { "mocky-delay": "5000ms" }
 };

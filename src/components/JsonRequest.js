@@ -134,7 +134,7 @@ class JsonRequest extends React.Component {
     return null;
   }
 }
-const ajaxurl = "https://www.alfaoils.co.uk/wp-admin/admin-ajax.php";
+//const ajaxurl = "https://www.alfaoils.co.uk/wp-admin/admin-ajax.php";
 JsonRequest.defaultProps = {
   onValidateResponse: json => !json.err,
   onRetry: () => {},

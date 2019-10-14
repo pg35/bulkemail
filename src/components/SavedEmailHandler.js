@@ -81,7 +81,7 @@ class SavedEmailHandler extends React.Component {
           nonce,
           clientId
         }}
-        method="GET"
+        method="POST"
         resource={resources.error.code500 && resources.delSavedEmail.pass}
         progressMessage="Deleting saved email"
         onSuccess={obj => {

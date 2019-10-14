@@ -40,7 +40,7 @@ class Sender extends React.Component {
           clientId,
           isnew: isNewEmail ? "yes" : "no"
         }}
-        method="GET"
+        method="POST"
         canRetry={false}
         resource={resources.error.code500 && resources.sender.pass}
         progressMessage="Processing"

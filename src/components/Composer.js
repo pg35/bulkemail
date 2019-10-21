@@ -6,6 +6,10 @@ import MySelect, {
   ValueContainer,
   animatedComponents
 } from "./MySelect.js";
+import MessageEditorWithPreview from "./MessageEditorWithPreview";
+import EmailPreview from "./EmailPreview";
+
+import { formatEmail, insertInStr } from "../util";
 
 function Composer(props) {
   const {
@@ -18,13 +22,19 @@ function Composer(props) {
     dirty,
     validation,
     onPostcodeChange,
-    touched
+    touched,
+    emailTemplate,
+    onEmailPreviewUpdate,
+    emailPreviewCount
   } = props;
 
   const optionsData = allPostcodes.map(postcode => ({
     value: postcode,
     label: postcode
   }));
+
+  const formattedEmail = formatEmail({ subject, message });
+  const html = insertInStr(formattedEmail, emailTemplate);
 
   return (
     <div className="mesblkml-composer">
@@ -57,21 +67,28 @@ function Composer(props) {
           name="subject"
           readOnly={readOnly}
           placeholder="Write Subject"
+          onBlur={onEmailPreviewUpdate}
         />
       </Field>
       <Field isValid={dirty && touched.message ? validation.message : true}>
-        <textarea
-          value={message}
+        <MessageEditorWithPreview
+          message={message}
+          formattedMessage={formattedEmail.message}
           onChange={onChange}
-          name="message"
-          readOnly={readOnly}
-          rows="10"
-          placeholder="Write Message"
+          onEmailPreviewUpdate={onEmailPreviewUpdate}
         />
       </Field>
       <Field isValid={true}>
-        *use [name] to insert customer billing name in the message e.g. Hi
-        [name], ....
+        <EmailPreview
+          html={html}
+          count={emailPreviewCount}
+          title={
+            <span>
+              Email Preview{" "}
+              <small>(updates when subject or message input loses focus)</small>
+            </span>
+          }
+        />
       </Field>
     </div>
   );

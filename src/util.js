@@ -1,5 +1,20 @@
+import { wpautop } from "./wpautop";
+
 export const plural = (c, p, s) => (c > 1 ? p : s);
 
+export function formatEmail({ subject, message }) {
+  return { subject, message: wpautop(message) };
+}
+export const defaultTokens = {
+  subject: '<td id="header_wrapper"><h1>',
+  message: '<div id="body_content_inner">'
+};
+export function insertInStr(data, str, tokens = defaultTokens) {
+  for (var p in tokens) {
+    str = str.replace(tokens[p], tokens[p] + data[p]);
+  }
+  return str;
+}
 //baseurl https://www.mocky.io/v2/
 export const resources = {
   resumer: {

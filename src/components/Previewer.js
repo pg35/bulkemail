@@ -2,7 +2,8 @@ import React from "react";
 
 import Highlight from "./Highlight";
 import JsonRequest from "./JsonRequest";
-import { resources, plural } from "../util";
+import EmailPreview from "./EmailPreview";
+import { resources, plural, formatEmail, insertInStr } from "../util";
 
 function Previewer(props) {
   const renderPreview = () => {
@@ -10,8 +11,14 @@ function Previewer(props) {
       email: { postcodes, subject, message },
       progress: { sentCount, customerCount },
       quota: { limit, used },
-      isNewEmail
+      isNewEmail,
+      emailPreviewCount,
+      emailTemplate
     } = props;
+
+    const formattedEmail = formatEmail({ subject, message });
+    const html = insertInStr(formattedEmail, emailTemplate);
+
     const remainingCustomers = customerCount - sentCount;
     const remainingQuota = limit - used;
     const feedback = !remainingQuota
@@ -35,7 +42,7 @@ function Previewer(props) {
             {plural(customerCount, "customers", "customer")})
           </div>
         </div>
-        <div className="mes-row">
+        {/*<div className="mes-row">
           <div className="mes-row__heading">Subject</div>
           <div className="mes-row__detail">{subject}</div>
         </div>
@@ -49,6 +56,7 @@ function Previewer(props) {
             }}
           />
         </div>
+          */}
         <div className="mes-row">
           <div className="mes-row__heading">Total customers to serve</div>
           <div className="mes-row__detail">
@@ -83,7 +91,9 @@ function Previewer(props) {
           <div className="mes-row__heading">Remaining Qutoa</div>
           <div className="mes-row__detail">{remainingQuota}</div>
         </div>
-
+        {(1 || !isNewEmail) && (
+          <EmailPreview html={html} count={emailPreviewCount} title="Email" />
+        )}
         <div className="mes-row" style={{ marginTop: "2em" }}>
           <small>
             <strong>Processing Info:</strong>

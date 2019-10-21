@@ -124,7 +124,7 @@
 }
 .mes-field--error .mes-multiseclct,
 .mes-field--error > div > input[type="text"],
-.mes-field--error > div > textarea {
+.mes-field--error > div textarea {
   border: 1px solid red;
 }
 .mes-field--error .mes-multiseclct > div:first-child {
@@ -163,4 +163,62 @@
   margin-top: 2em;
   color: #cc3300;
   font-weight: bold;
+}
+
+/* msg editor, preview and email preivew */
+iframe {
+  border: 1px solid hsl(0, 0%, 80%);
+  overflow: hidden;
+  width: 100%;
+  line-height: inherit;
+}
+textarea {
+  overflow: hidden;
+  width: 100%;
+  resize: none;
+  line-break: inherit;
+}
+.mesblkml-msgwrap {
+}
+.mesblkml-title {
+  font-weight: bold;
+  margin-bottom: 1em;
+  text-align: left;
+}
+.mesblkml-title small {
+  font-weight: normal;
+}
+.mesblkml-msgpreview--mobile {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 1em;
+}
+.mesblkml-msgeditor {
+  padding: 0;
+  margin-bottom: 1em;
+}
+.mesblkml-msgpreview {
+  display: none;
+}
+@media (min-width: 768px) {
+  .mesblkml-2cols {
+    display: flex;
+  }
+  .mesblkml-2cols > div {
+    width: 50%;
+  }
+  .mesblkml-msgeditor {
+    padding-right: 10px;
+  }
+  .mesblkml-msgpreview {
+    border-left: 2px solid hsl(0, 0%, 80%);
+    display: block;
+    padding-left: 10px;
+  }
+  .mesblkml-msgpreview p:first-child {
+    margin: 0;
+  }
+  .mesblkml-msgpreview--mobile {
+    display: none;
+  }
 }

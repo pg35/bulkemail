@@ -35,7 +35,9 @@ class App extends React.Component {
         used: 0,
         nextRenewal: ""
       },
-      nonce: ""
+      nonce: "",
+      emailTemplate: "",
+      emailPreviewCount: 0
     };
   }
 
@@ -122,6 +124,11 @@ class App extends React.Component {
   handleRestart = () =>
     this.setState(prevState => ({ initCount: prevState.initCount + 1 }));
 
+  handleEmailPreviewUpdate = () =>
+    this.setState(prevState => ({
+      emailPreviewCount: prevState.emailPreviewCount + 1
+    }));
+
   renderInitRequest() {
     return (
       <JsonRequest
@@ -138,7 +145,8 @@ class App extends React.Component {
             email: this.buildEmailObj(obj.savedEmail),
             progress: this.buildProgressObj(obj.savedEmail),
             quota: obj.quota,
-            nonce: obj.nonce
+            nonce: obj.nonce,
+            emailTemplate: obj.emailTemplate
           }));
         }}
         onComplete={() => "app oncomplete called"}
@@ -152,7 +160,16 @@ class App extends React.Component {
 
   render() {
     console.log("app state", this.state);
-    const { initCount, isNewEmail, email, progress, quota, nonce } = this.state;
+    const {
+      initCount,
+      isNewEmail,
+      email,
+      progress,
+      quota,
+      nonce,
+      emailTemplate,
+      emailPreviewCount
+    } = this.state;
     const emailValidation = Object.keys(email)
       .filter(p => "dirty" !== p && "touched" !== p)
       .reduce(
@@ -200,12 +217,15 @@ class App extends React.Component {
                   onChange={this.handleEmailDraftChange}
                   validation={emailValidation}
                   onPostcodeChange={this.handlePostcodeChange}
+                  emailTemplate={emailTemplate}
+                  onEmailPreviewUpdate={this.handleEmailPreviewUpdate}
+                  emailPreviewCount={emailPreviewCount}
                 />
                 <Navigation
                   prevPath="/"
                   prevLabel="Home"
                   nextPath="/preview"
-                  nextLabel="Preview"
+                  nextLabel="Review"
                   onNext={e => {
                     const dirty = this.state.email.dirty;
                     this.setState({

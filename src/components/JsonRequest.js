@@ -62,7 +62,7 @@ class JsonRequest extends React.Component {
         : fetch(url, options);
     promise
       .then(response => {
-        console.log(response);
+        //console.log(response);
         if (response.status >= 200 && response.status < 300) {
           return response.json();
         } else {
@@ -114,7 +114,7 @@ class JsonRequest extends React.Component {
     }
     if (this.state.error) {
       const { error } = this.state;
-      console.log("a", error.message, error.name);
+      //console.log("a", error.message, error.name);
       let detail = error.message;
       if (!detail && error.response) {
         detail = error.response.status + " " + error.response.statusText;

@@ -29,7 +29,7 @@ class Progress extends React.Component {
         resource={resources.error.code500 && resources.progress.pass}
         progressMessage="Fetching progress"
         onSuccess={obj => {
-          console.log(this.props);
+          //console.log(this.props);
           this.mounted && this.props.onSentCountChange(obj.sentCount);
         }}
         onComplete={() => {

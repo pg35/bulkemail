@@ -85,7 +85,7 @@ class SavedEmailHandler extends React.Component {
         resource={resources.error.code500 && resources.delSavedEmail.pass}
         progressMessage="Deleting saved email"
         onSuccess={obj => {
-          console.log("delete saved email::", obj);
+          //console.log("delete saved email::", obj);
           this.setState({
             deletingSavedEmail: false
           });

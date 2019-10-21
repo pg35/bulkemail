@@ -4,7 +4,7 @@ import Quota from "./Quota";
 import SavedEmailHandler from "./SavedEmailHandler";
 
 function HomePage(props) {
-  console.log("homepage ", props);
+  //console.log("homepage ", props);
   return (
     <div id="mesblkml-home">
       <h2>Home</h2>

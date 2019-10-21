@@ -126,7 +126,7 @@ function Previewer(props) {
         resource={resources.error.custom && resources.previewer.pass}
         progressMessage="Generating preview"
         onSuccess={obj => {
-          console.log("preview::", obj);
+          //console.log("preview::", obj);
           props.onPreviewGenerate(obj);
         }}
       />

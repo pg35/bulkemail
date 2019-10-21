@@ -45,7 +45,7 @@ class App extends React.Component {
     let postcodes = (obj && obj.postcodes) || null;
     if (postcodes)
       postcodes = postcodes.split(",").map(x => ({ label: x, value: x }));
-    console.log("fetched postcd", postcodes);
+    //console.log("fetched postcd", postcodes);
     return {
       postcodes,
       subject: (obj && obj.subject) || "",
@@ -138,7 +138,7 @@ class App extends React.Component {
           !this.state.initCount ? "Initializing App" : "Fetching status"
         }
         onSuccess={obj => {
-          console.log("app::", obj);
+          //console.log("app::", obj);
           this.setState(prevState => ({
             initCount: prevState.initCount + 1,
             isNewEmail: !obj.savedEmail,
@@ -155,11 +155,11 @@ class App extends React.Component {
   }
 
   componentWillUnmount() {
-    console.log("app: unmounting");
+    //console.log("app: unmounting");
   }
 
   render() {
-    console.log("app state", this.state);
+    //console.log("app state", this.state);
     const {
       initCount,
       isNewEmail,
@@ -186,7 +186,7 @@ class App extends React.Component {
     const isInvalidEmail = Object.keys(emailValidation).filter(
       p => !emailValidation[p]
     ).length;
-    console.log(emailValidation, isInvalidEmail);
+    //console.log(emailValidation, isInvalidEmail);
     return !(initCount % 2) ? (
       <div className="mes-hvcenter">{this.renderInitRequest()}</div>
     ) : (

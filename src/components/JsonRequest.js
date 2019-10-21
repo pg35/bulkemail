@@ -55,7 +55,7 @@ class JsonRequest extends React.Component {
       body: buildPostPayload(data)
     };
     this.setState({ fetching: true, error: null });
-    console.info(url, resource, method, data, url + buildQueryString(data));
+    //console.info(url, resource, method, data, url + buildQueryString(data));
     const promise =
       !method || "GET" === method
         ? fetch(url + buildQueryString(data))
@@ -79,14 +79,13 @@ class JsonRequest extends React.Component {
         if (this.mounted) {
           this.setState({ error });
           onError && onError(error);
-        } else
-          console.log("json request::catching error when unmounted", error);
+        } //else console.log("json request::catching error when unmounted", error);
       })
       .finally(() => {
         if (this.mounted) {
           this.setState({ fetching: false });
           onComplete && onComplete();
-        } else console.log("json request::completed when unmounted");
+        } //else console.log("json request::completed when unmounted");
       });
   }
 

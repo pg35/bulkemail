@@ -103,7 +103,9 @@
 .mesblkml-navigation > a:last-child {
   float: right;
 }
-
+.mesblkml-navigation > a:first-child {
+  float: left;
+}
 .mes-field {
   text-align: left;
   margin-bottom: 16px;
@@ -148,11 +150,11 @@
 @media (min-width: 768px) {
   .mes-row__heading {
     position: absolute;
-    width: 240px;
+    width: 300px;
     margin-bottom: 0;
   }
   .mes-row__detail {
-    margin-left: 250px;
+    margin-left: 310px;
     padding: 0 2px;
   }
 }

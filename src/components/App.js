@@ -57,7 +57,7 @@ class App extends React.Component {
     return {
       sentCount: (obj && obj.sentCount) || 0,
       customerCount: (obj && obj.customerCount) || 0,
-      clientId: (obj && obj.clientId) || Date.now()
+      clientId: (obj && obj.clientId) || Math.floor(Date.now() / 1000)
     };
   }
 
@@ -231,7 +231,7 @@ class App extends React.Component {
                 <Navigation
                   prevPath={isNewEmail ? "/compose" : "/"}
                   prevLabel={isNewEmail ? "Compose" : "Home"}
-                  nextPath="/process"
+                  nextPath={progress.customerCount ? "/process" : false}
                   nextLabel="Confirm & Send"
                   onNext={e => {
                     if (!window.confirm(`Are you sure to send this email?`))

@@ -22,7 +22,10 @@ class Progress extends React.Component {
   renderFetchRequest() {
     return (
       <JsonRequest
-        data={{ action: "mesbulkemailerprogress" }}
+        data={{
+          action: "mesbulkemailerprogress",
+          clientId: this.props.clientId
+        }}
         resource={resources.error.code500 && resources.progress.pass}
         progressMessage="Fetching progress"
         onSuccess={obj => {

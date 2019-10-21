@@ -59,19 +59,14 @@ class Sender extends React.Component {
   }
   render() {
     const { sending, fetchProgress, message } = this.state;
-    const {
-      progress: { sentCount, customerCount },
-      onRestart,
-      onSentCountChange
-    } = this.props;
+    const { progress, onRestart, onSentCountChange } = this.props;
     const element = sending ? (
       <div>
         <div className="mesblkml-sender__status">
           {this.renderSendRequest()}
         </div>
         <Progress
-          sentCount={sentCount}
-          customerCount={customerCount}
+          {...progress}
           stop={!fetchProgress}
           onSentCountChange={onSentCountChange}
         />

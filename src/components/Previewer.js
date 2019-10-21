@@ -113,7 +113,7 @@ function Previewer(props) {
     return (
       <JsonRequest
         data={{ action: "mesbulkemailerpreview", postcodes }}
-        resource={resources.error.code500 && resources.previewer.pass}
+        resource={resources.error.custom && resources.previewer.pass}
         progressMessage="Generating preview"
         onSuccess={obj => {
           console.log("preview::", obj);

@@ -15,6 +15,11 @@ function buildQueryString(params) {
           .join("&")
     : "";
 }
+function buildPostPayload(data) {
+  var a = new URLSearchParams();
+  for (var p in data) a.append(p, data[p]);
+  return a;
+}
 function throwError(msg, data) {
   var error = new Error(msg);
   error.data = data;
@@ -45,9 +50,9 @@ class JsonRequest extends React.Component {
     const options = {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
       },
-      body: JSON.stringify(data)
+      body: buildPostPayload(data)
     };
     this.setState({ fetching: true, error: null });
     console.info(url, resource, method, data, url + buildQueryString(data));
@@ -139,7 +144,7 @@ JsonRequest.defaultProps = {
   onValidateResponse: json => !json.err,
   onRetry: () => {},
   canRetry: true,
-  baseUrl: window.ajaxurl //"https://www.mocky.io/v2"
+  baseUrl: /*window.ajaxurl //*/ "https://www.mocky.io/v2"
   //data: { "mocky-delay": "5000ms" }
 };
 export default JsonRequest;

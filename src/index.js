@@ -169,20 +169,6 @@ class Test extends React.Component {
 function App2() {
   return <App allPostcodes={allPostcodes} />;
 }
-<RequestError
-  error={new Error("exception occured")}
-  showRetry={true}
-  onRetry={() => console.log("retry clicked")}
-/>;
-const WithReq = withRequest({
-  ...requestConfig,
-  message: "Initilializing App",
-  fetch: () =>
-    new Promise((resolve, reject) =>
-      setTimeout(() => reject(new Error("file not found")), 1000)
-    )
-})(({ data }) => data);
-
 class ErrorBoundry extends React.Component {
   componentDidCatch(err, errInfo) {
     console.log(err, errInfo);

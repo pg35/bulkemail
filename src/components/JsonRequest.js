@@ -144,7 +144,7 @@ JsonRequest.defaultProps = {
   onValidateResponse: json => !json.err,
   onRetry: () => {},
   canRetry: true,
-  baseUrl: /*window.ajaxurl //*/ "https://www.mocky.io/v2"
+  baseUrl: window.ajaxurl //"https://www.mocky.io/v2"
   //data: { "mocky-delay": "5000ms" }
 };
 export default JsonRequest;

@@ -77,6 +77,10 @@ class App extends React.Component {
         [name]: value,
         dirty: true,
         touched: { ...this.state.email.touched, [name]: 1 }
+      },
+      progress: {
+        ...this.state.progress,
+        customerCount: 0
       }
     });
   };
@@ -88,6 +92,10 @@ class App extends React.Component {
         postcodes: selectedOptionsData,
         dirty: true,
         touched: { ...this.state.email.touched, postcodes: 1 }
+      },
+      progress: {
+        ...this.state.progress,
+        customerCount: 0
       }
     });
   };

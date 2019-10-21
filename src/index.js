@@ -37,6 +37,7 @@ const colourOptions = [
 ];
 const delay = ms => cb => setTimeout(cb, ms);
 const allPostcodes = [
+  "Test",
   "BT1",
   "BT2",
   "BT3",

@@ -71,7 +71,7 @@ class JsonRequest extends React.Component {
       })
       .then(json => {
         if (onValidateResponse && !onValidateResponse(json)) {
-          throwError(json.errMsg ? json.errMsg : "Invalid response", json);
+          throwError(json.msg ? json.msg : "Invalid response", json);
         }
         onSuccess && onSuccess(json);
       })

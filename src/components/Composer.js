@@ -75,7 +75,7 @@ function Composer(props) {
           message={message}
           formattedMessage={formattedEmail.message}
           onChange={onChange}
-          onEmailPreviewUpdate={onEmailPreviewUpdate}
+          onBlur={onEmailPreviewUpdate}
         />
       </Field>
       <Field isValid={true}>

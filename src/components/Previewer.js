@@ -42,11 +42,11 @@ function Previewer(props) {
             {plural(customerCount, "customers", "customer")})
           </div>
         </div>
-        {/*<div className="mes-row">
+        <div className="mes-row">
           <div className="mes-row__heading">Subject</div>
           <div className="mes-row__detail">{subject}</div>
         </div>
-        <div className="mes-row">
+        {/*<div className="mes-row">
           <div className="mes-row__heading">Message</div>
           <div
             className="mes-row__detail"
@@ -91,7 +91,7 @@ function Previewer(props) {
           <div className="mes-row__heading">Remaining Qutoa</div>
           <div className="mes-row__detail">{remainingQuota}</div>
         </div>
-        {(1 || !isNewEmail) && (
+        {!isNewEmail && (
           <EmailPreview html={html} count={emailPreviewCount} title="Email" />
         )}
         <div className="mes-row" style={{ marginTop: "2em" }}>

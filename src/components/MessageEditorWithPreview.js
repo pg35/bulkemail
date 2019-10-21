@@ -11,7 +11,7 @@ function MessageEditorWithPreview(props) {
     }, 0);
   };
 
-  const { message, formattedMessage, onChange, onEmailPreviewUpdate } = props;
+  const { message, formattedMessage, onChange, onBlur } = props;
   return (
     <div className="mesblkml-msgwrap">
       <div className="mesblkml-2cols">
@@ -23,7 +23,7 @@ function MessageEditorWithPreview(props) {
             name="message"
             placeholder="Write Message"
             onKeyDown={resizeTextArea}
-            onBlur={onEmailPreviewUpdate}
+            onBlur={onBlur}
           />
         </div>
         <div className="mesblkml-msgpreview">
